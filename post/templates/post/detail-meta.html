@@ -1,13 +1,16 @@
 <div class="post-meta">
     <div class="post-tags">
         <span>Категория: </span>
-        <button type="button" class="tag btn btn-light btn-sm">{{ object.category }}</button>
+        <a href="{% url 'category:category-posts' object.category.id %}" class="tag btn btn-light btn-sm">
+            {{ object.category }}
+        </a>
     </div>
     <div class="post-tags">
         <span>Теги: </span>
 
-        {% for tag in object.tag.all %}
-            <button type="button" class="tag btn btn-light btn-sm">{{ tag }}</button>
+        {% for tag_item in object.tag.all %}
+
+            <a href="{% url 'tag:tag-posts' tag_item.id %}" class="tag btn btn-light btn-sm">{{ tag_item.label }}</a>
         {% endfor %}
     </div>
 </div>

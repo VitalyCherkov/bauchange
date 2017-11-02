@@ -1,0 +1,232 @@
+@import url('https://fonts.googleapis.com/css?family=Jura|Russo+One');
+
+body, html {
+    background-color: #ECECEA;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 16px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Russo One', sans-serif;
+    margin: 0;
+}
+
+a, a:hover, a:visited {
+    color: black;
+    text-decoration: none;
+}
+
+p {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 16px;
+    line-height: 28px;
+    margin-bottom: 0px;
+}
+
+.meta {
+    color: #616161;
+}
+
+.pagination .page-item a {
+    color: #558C89;
+}
+
+.tag, .user-popular {
+    margin: 3px;
+}
+
+.list-inline {
+    margin-bottom: 0px;
+}
+
+.navbar-default {
+    margin-bottom: 0px;
+}
+
+.jumbotron {
+    background-color: #558C89;
+    color: white;
+    max-width: 100%;
+    margin: 0 0 20px 0;
+    border-radius: 0px;
+}
+
+.welcome-text {
+    padding-left: 50px;
+    padding-right: 20px;
+}
+
+.welcome-login {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.welcome-login #login {
+    float: right;
+}
+
+.post-mini {
+    margin-bottom: 20px;
+}
+
+.post-category-mini {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 16px;
+}
+
+.post-statistics-mini {
+    margin: 0;
+    padding: 0;
+    opacity: 1;
+}
+
+.post-statistics ul {
+    margin: 5px;
+}
+
+.author-photo-mini {
+    float: left;
+    margin: 5px;
+    margin-top: 0px;
+    width: 40px;
+    height: 40px;
+}
+
+.pub-date-mini {
+    margin-right: 20px;
+}
+
+.author-name-mini {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    margin-right: 20px;
+    line-height: 40px;
+}
+
+.sidebar {
+    min-width: 250px;
+}
+
+.create-post {
+    margin-bottom: 20px;
+}
+
+.create-post-form {
+    margin: 0 20px 0 20px;
+}
+
+.create-post-footer > div {
+    margin: 0;
+    padding: 0;
+}
+
+.create-post-footer .create-post-category {
+    margin-bottom: 20px;
+}
+
+.post {
+    margin-bottom: 20px;
+}
+
+.post-sidebar {
+    display: inline-block;
+    float: left;
+    margin-right: 30px;
+    margin-bottom: 10px;
+}
+
+.author {
+    width: 150px;
+}
+
+.author-name {
+    margin: 10px;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.author .card-body {
+    margin: 0;
+    padding: 0;
+}
+
+
+
+.post-votes, .post-views {
+    height: 40px;
+    line-height: 40px;
+    display: inline-block;
+}
+
+.post-views {
+    margin-left: 10px;
+}
+
+.post-pub-date {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.post-votes button {
+    width: 120px;
+}
+
+.post-comments {
+    margin: 20px;
+}
+
+.post-comments h4 {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.comment {
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.comment .comment-author-photo {
+    display: block;
+    float: left;
+    padding: 0;
+    max-width: 60px;
+    height: 60px;
+    margin: 10px 10px auto 0;
+}
+
+.comment-author-photo img {
+    width: 60px;
+    height: 60px;
+}
+
+.comment-author {
+    font-weight: 700;
+}
+
+.comment-content {
+}
+
+.comment textarea {
+    margin-bottom: 10px;
+    min-height: 80px;
+}
+
+.comment-footer span {
+    height: 30px;
+    line-height: 30px;
+}
+
+/*
+Registration
+*/
+
+.reg {
+    margin-bottom: 20px;
+}
+
+.reg textarea {
+    min-height: 80px;
+}

@@ -1,3 +1,5 @@
+{% url 'user:user-page' object.user.id as user_page%}
+
 <div class="post-sidebar justify-content-center">
 
     <p class="post-pub-date meta">
@@ -7,7 +9,7 @@
     <div class="author card">
         <img class="card-img-top" src="/bauchange_fish/img/user_empty.png" alt="Author proto">
         <div class="card-body">
-            <h2 class="author-name card-title">{{ object. }}</h2>
+            <h2 class="author-name card-title"><a href="{{ user_page }}">{{ object.user.name }}</a></h2>
         </div>
     </div>
 
