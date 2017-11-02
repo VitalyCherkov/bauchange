@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/bauchange_fish/css/bootstrap.css">
+    <link rel="stylesheet" href="/bauchange_fish/css/base.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Bauchange</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Поактивничаем?</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Актуальное<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Свежее</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Категории</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Хронология</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Имечко Фамилия
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
+                        <a class="dropdown-item" href="#">Создать инициативу</a>
+                        <a class="dropdown-item" href="#">Мои инициативы</a>
+                        <a class="dropdown-item" href="#">Настройки</a>
+                        <a class="dropdown-item" href="#">Выход</a>
+                    </div>
+                </li>
+            </ul>
+
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="row jumbotron justify-content-center">
+    <div class="welcome-text col-lg-4 col-md-6">
+        <h2>{% block title %}{% endblock %}</h2>
+    </div>
+
+    <form class="welcome-login col-lg-4 col-md-6">
+        <div class="form-group row">
+            <label for="inputEmail" class="col-md-4 col-form-label">Email</label>
+            <div class="col-md-8">
+                <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputPassword" class="col-md-4 col-form-label">Пароль</label>
+            <div class="col-md-8">
+                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+            </div>
+        </div>
+        <button type="button" class="btn btn-danger " id="login">Войти!</button>
+    </form>
+</div>
+
+<div class="middle container-fluid">
+    <div class="row justify-content-center">
+        <div class="content col-lg-7 col-md-8">
+
+
+            {% block text %}
+            {% endblock %}
+
+            {% block content %}{% endblock %}
+
+
+        </div>
+        <div class="sidebar col-lg-2 col-md-4">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <p>Топ пользователей:</p>
+                    <button type="button" class="user-popular btn btn-light btn-sm">Имечко Фамилия</button>
+                    <button type="button" class="user-popular btn btn-light btn-sm">Ваня Шпорт</button>
+                    <button type="button" class="user-popular btn btn-light btn-sm">Артем Артемов</button>
+                    <button type="button" class="user-popular btn btn-light btn-sm">Андрей Андреев</button>
+                    <button type="button" class="user-popular btn btn-light btn-sm">Его Величество ВВ</button>
+                </li>
+                <li class="list-group-item">
+                    <p>Популярные теги:</p>
+                    <button type="button" class="tag btn btn-light btn-sm">Кофе</button>
+                    <button type="button" class="tag btn btn-light btn-sm">Капучино</button>
+                    <button type="button" class="tag btn btn-light btn-sm">Столовая</button>
+                    <button type="button" class="tag btn btn-light btn-sm">Физика</button>
+                    <button type="button" class="tag btn btn-light btn-sm">Это</button>
+                    <button type="button" class="tag btn btn-light btn-sm">Круто</button>
+                    <button type="button" class="tag btn btn-light btn-sm">Поступай</button>
+                    <button type="button" class="tag btn btn-light btn-sm">В</button>
+                    <button type="button" class="tag btn btn-light btn-sm">Бауманку</button>
+                    <button type="button" class="tag btn btn-light btn-sm">Напас</button>
+                    <button type="button" class="tag btn btn-light btn-sm">Лавандос</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="footer container">
+
+</div>
+
+
+<script src="http://code.jquery.com/jquery.min.js"></script>
+<script src="https://popper.js.org"></script>
+<script src="/bauchange_fish/js/bootstrap.min.js"></script>
+
+</body>
+</html>
