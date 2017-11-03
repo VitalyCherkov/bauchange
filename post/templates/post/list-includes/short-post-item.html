@@ -1,37 +1,6 @@
 <!-- Мини пост -->
 <div class="post-mini card">
-    <div class="card-body">
-        <h2 class="card-title">
-            {{ post.title }}
-            <a href="{% url "category:category-posts" pk=post.category.id %}">
-                <span class="post-category-mini badge-success">
-                    {{ post.category.label }}
-                </span>
-            </a>
-        </h2>
-        <p class="card-text">
-            {{ post.text|truncatewords:80 }}
-        </p>
-        <a href="{% url "post:detail" pk=post.id %}" class="card-link">Читать дальше...</a>
-    </div>
+    {% include "post/list-includes/short-post-body.html" %}
 
-    <div class="card-footer">
-        <div class="row">
-            <div class="post-info meta col">
-                {% include "post/list-includes/short-post-tags.html" with tags=post.tag %}
-                <div class="post-statistics-mini card-text">
-                    <span class="pub-date-mini float-left">{{ post.pub_date|date:"H:i d.m.Y" }}</span>
-                    <ul class="list-inline">
-                        <li class="list-inline-item"><i class="fa fa-chevron-up" aria-hidden="true"></i> {{ post.likes }}</li>
-                        <li class="list-inline-item"><i class="fa fa-chevron-down" aria-hidden="true"></i> {{ post.dislikes }}</li>
-                        <li class="list-inline-item"><i class="fa fa-eye" aria-hidden="true"></i> {{ post.views }}</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="author-info-mini col-md-auto col-sm-auto row float-right">
-                <img src="../img/user_empty.png" class="author-photo-mini rounded float-left">
-                <h4 class="author-name-mini">{{ post.user.name }}</h4>
-            </div>
-        </div>
-    </div>
+    {% include "post/list-includes/short-post-footer.html" %}
 </div>

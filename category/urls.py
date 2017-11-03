@@ -3,5 +3,5 @@ from . import views
 
 app_name = 'category'
 urlpatterns = [
-    url(r'^(?P<pk>\d+)$', views.OK, name='category-posts'),
+    url(r'^(?P<pk>\d+)$', views.PostsByCategory.as_view(), name='posts-by-category'),
 ]

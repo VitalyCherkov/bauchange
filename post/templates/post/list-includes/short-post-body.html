@@ -1,0 +1,14 @@
+<div class="card-body">
+    <h2 class="card-title">
+        {{ post.title }}
+        <a href="{% url 'category:posts-by-category' pk=post.category.id %}">
+            <span class="post-category-mini badge-success">
+                {{ post.category.label }}
+            </span>
+        </a>
+    </h2>
+    <p class="card-text">
+        {{ post.text|truncatewords:80 }}
+    </p>
+    <a href="{% url "post:detail" pk=post.id %}" class="card-link">Читать дальше...</a>
+</div>
