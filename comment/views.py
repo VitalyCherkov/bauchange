@@ -6,11 +6,13 @@ from .models import Comment
 class CommentsList(ListView):
     model = Comment
     template_name = 'comment/list.html'
-
-    def get_queryset(self):
-        queryset = 
+    context_object_name = 'comments'
 
     def get_context_data(self, **kwargs):
-        context = super(CommentsList, self).get_context_data(kwargs)
-        context['comments'] = Comment.objects.filter(post=kwargs['pk'])
+        context = super(CommentsList, self).get_context_data()
+        context['comments'] = Comment.user_comments.get_queryset(self.args[0])
+
+        for comment in context['comments']:
+            print(comment)
+
         return context
