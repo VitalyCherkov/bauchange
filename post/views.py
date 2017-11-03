@@ -24,3 +24,6 @@ class DetailPost(DetailView):
 
 class ListPost(ListView):
     model = Post
+    template_name = 'post/list.html'
+    context_object_name = 'posts_list'
+

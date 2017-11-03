@@ -4,8 +4,8 @@
 
 <div class="post card">
     <div class="post-main card-body">
-        {% include "post/detail-sidebar.html" with pub_date=post.pub_date %}
-        {% include "post/detail-content.html" %}
+        {% include "post/detail-includes/detail-sidebar.html" with pub_date=post.pub_date %}
+        {% include "post/detail-includes/detail-content.html" %}
     </div>
     <div class="dropdown-divider"></div>
 

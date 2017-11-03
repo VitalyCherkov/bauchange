@@ -1,0 +1,5 @@
+<div class="post-tags-mini">
+    {% for tag_item in tags.all %}
+        <a href="{% url "tag:tag-posts" pk=tag_item.id %}" class="tag btn btn-light btn-sm">{{ tag_item.label }}</a>
+    {% endfor %}
+</div>
