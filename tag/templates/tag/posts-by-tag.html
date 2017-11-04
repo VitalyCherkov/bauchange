@@ -1,4 +1,1 @@
-{{ tag_label }}
-<br>
-
-{% include "post/list.html" with posts_list=object_list %}
+{% include "post/all-posts.html" with page_title="Тег: "|add:tag_label page_description=" " posts_list=object_list %}

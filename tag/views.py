@@ -7,23 +7,6 @@ from post.models import Post
 from post.views import ListPost
 
 
-def OK(request, **kwargs):
-    return render(request, 'OK_user')
-
-"""
-class PostsByTag(DetailView):
-    model = Tag
-    context_object_name = 'tag'
-    template_name = 'tag/posts-by-tag.html'
-    paginate_by = 10
-
-    def get_context_data(self, **kwargs):
-        context = super(PostsByTag, self).get_context_data()
-        context['posts_list'] = Post.posts.get_queryset_by_tag(self.kwargs['pk'])
-        return context
-"""
-
-
 class PostsByTag(SingleObjectMixin, ListView):
     model = Tag
     template_name = "tag/posts-by-tag.html"

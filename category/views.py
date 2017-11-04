@@ -7,23 +7,6 @@ from post.models import Post
 from post.views import ListPost
 
 
-def OK(request, **kwargs):
-    return render(request, 'OK_user')
-
-
-"""
-class PostsByCategory(DetailView):
-    template_name = 'category/posts-by-category.html'
-    context_object_name = 'category'
-    model = Category
-
-    def get_context_data(self, **kwargs):
-        context = super(PostsByCategory, self).get_context_data()
-        context['posts_list'] = Post.posts.get_queryset_by_category(self.kwargs['pk'])
-        return context
-"""
-
-
 class PostsByCategory(SingleObjectMixin, ListView):
     model = Category
     template_name = "category/posts-by-category.html"
@@ -36,7 +19,7 @@ class PostsByCategory(SingleObjectMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(PostsByCategory, self).get_context_data(**kwargs)
         context['pag_options'] = ListPost.set_paginator_options(context)
-        context['category_label'] = self.object.label
+        context['category'] = self.object
         return context
 
     def get_queryset(self):

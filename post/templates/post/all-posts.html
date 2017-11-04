@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block base_block %}
+    {% with jumbotron_is_active=True page_title=page_title page_description=page_description %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}
+
+{% block content %}
+    {% include "post/list.html" %}
+{% endblock %}

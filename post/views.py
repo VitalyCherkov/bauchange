@@ -25,14 +25,14 @@ class DetailPost(DetailView):
 
 class ListPost(ListView):
     model = Post
-    template_name = 'post/list.html'
+    template_name = 'post/all-posts.html'
     context_object_name = 'posts_list'
     paginate_by = 10
 
     def set_paginator_options(context):
-        first_index = max(context['page_obj'].number - 3, 1)
-        last_index = min(first_index + 6, context['paginator'].num_pages)
-        first_index = max(1, last_index - 6)
+        first_index = max(context['page_obj'].number - 2, 1)
+        last_index = min(first_index + 4, context['paginator'].num_pages)
+        first_index = max(1, last_index - 4)
 
         return {
             'first': first_index,
