@@ -10,5 +10,5 @@
     <p class="card-text">
         {{ post.text|truncatewords:80 }}
     </p>
-    <a href="{% url "post:detail" pk=post.id %}" class="card-link">Читать дальше...</a>
+    <a href="{{ post.get_absolute_url }}" class="card-link">Читать дальше...</a>
 </div>

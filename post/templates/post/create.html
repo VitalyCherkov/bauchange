@@ -1,46 +1,137 @@
-<!-- Создание поста -->
-
 {% extends "base.html" %}
 
-{% block title %}
-Создание поста
-{% endblock %}
+{% block content %}
+    <div class="create-post card">
+        <div class="card-body">
+            <h2 class="card-title">
+                Создать инициативу
+            </h2>
+            <form method="post" action="{% url "post:create" %}" class="create-post-form">
+                {% csrf_token %}
 
-{% block text %}
-<div class="create-post card">
-    <div class="card-body">
-        <h2 class="card-title">
-            Создать инициативу
-        </h2>
-        <form class="create-post-form">
-            <div class="form-group row">
-                <label class="col-lg-3 col-md-4 col-form-label" for="post-form-title">Заголовок:</label>
-                <input type="text" class="form-control col" id="post-form-title">
-            </div>
-            <div class="form-group row">
-                <label class="col-lg-3 col-md-4 col-form-label" for="post-form-text">Текст:</label>
-                <textarea type="text" class="form-control col" id="post-form-text"></textarea>
-            </div>
-            <div class="form-group row">
-                <label class = "col-lg-3 col-md-4 col-form-label" for="post-form-tags">Теги:</label>
-                <input type="text" class="form-control col" id="post-form-tags">
-            </div>
-            <div class="create-post-footer row">
-                <div class="create-post-category form-group row col-lg-6 col-md-8">
-                    <label class = "col-lg-6  col-md-6 col-form-label" for="post-form-category">Категория:</label>
-                    <select class="form-control col-lg-6 col-md-6" id="post-form-category">
-                        <option>Учебный процесс</option>
-                        <option>Спорт</option>
-                        <option>Столовая</option>
-                        <option>Досуг</option>
-                        <option>Практика</option>
-                    </select>
+                {#Заголовок#}
+                <div class="form-group row">
+                    <label class="col-lg-3 col-md-4 col-form-label" for="{{ form.title.id_for_label }}">
+                        {{ form.title.label }}
+                    </label>
+
+                    <div class="form-group-main p-0 col">
+                        {% if form.title.errors %}
+                            {% for error in form.title.errors %}
+                                <small class="form-text text-danger" >
+                                    {{ error }}
+                                </small>
+                            {% endfor %}
+                        {% endif %}
+                        <input
+                                type="text"
+                                name="{{ form.title.html_name }}"
+                                class="form-control
+                                    {% if form.title.errors %} is-invalid {% endif %}
+                                "
+                                value="{{ form.title.value|default_if_none:"" }}"
+                                id="{{ form.title.id_for_label }}"
+                        >
+
+                        <small class="form-text text-muted">
+                            {{ form.title.help_text }}
+                        </small>
+                    </div>
                 </div>
-                <div class="col-lg-6 col-md-4">
-                    <input role="button" class="btn btn-primary float-right" type="submit" value="Предложить!" id="create-post-button">
+
+                {#Текст#}
+                <div class="form-group row">
+                    <label class="col-lg-3 col-md-4 col-form-label" for="{{ form.text.id_for_label }}">
+                        {{ form.text.label }}
+                    </label>
+                    <div class="form-group-main p-0 col">
+                        {% if form.text.errors %}
+                            {% for error in form.text.errors %}
+                                <small class="form-text text-danger" >
+                                    {{ error }}
+                                </small>
+                            {% endfor %}
+                        {% endif %}
+                        <textarea
+                                type="text"
+                                name="{{ form.text.html_name }}"
+                                class="form-control col
+                                    {% if form.text.errors %} is-invalid {% endif %}
+                                "
+                                id="{{ form.text.id_for_label }}"
+                                rows="10"
+                        >{{ form.text.value|default_if_none:"" }}</textarea>
+                    </div>
                 </div>
-            </div>
-        </form>
+
+                {#Теги#}
+                <div class="form-group row">
+                    <label class = "col-lg-3 col-md-4 col-form-label" for="{{ form.tags.id_for_label }}">
+                        {{ form.tags.label }}
+                    </label>
+
+                    <div class="form-group-main p-0 col">
+                        {% if form.tags.errors %}
+                            {% for error in form.tags.errors %}
+                                <small class="form-text text-danger" >
+                                    {{ error }}
+                                </small>
+                            {% endfor %}
+                        {% endif %}
+                        <input
+                                type="text"
+                                name="{{ form.tags.html_name }}"
+                                class="form-control
+                                    {% if form.tags.errors %} is-invalid {% endif %}
+                                "
+                                id="{{ form.tags.id_for_label }}"
+                        >
+
+                        <small class="form-text text-muted">
+                            {{ form.tags.help_text }}
+                        </small>
+                    </div>
+                </div>
+
+                {#Категория#}
+                <div class="create-post-footer row">
+
+                    <div class="create-post-category form-group row col-lg-6 col-md-8">
+                        <label class = "col-lg-6 col-md-6 col-form-label" for="{{ form.category.id_for_label }}">{{ form.category.label }}</label>
+
+                        <div  class="p-0 col-lg-6 col-md-6">
+                            {% if form.category.errors %}
+                                {% for error in form.category.errors %}
+                                    <small class="form-text text-danger" >
+                                        {{ error }}
+                                    </small>
+                                {% endfor %}
+                            {% endif %}
+
+                            <select
+                                    class="form-control
+                                        {% if form.category.errors %} is-invalid {% endif %}
+                                    "
+                                    id="{{ form.category.id_for_label }}"
+                                    name="{{ form.category.html_name }}"
+                            >
+                                {% for index, category in form.category.field.choices %}
+                                    <option value="{{ index }}">
+                                        {{ category|default_if_none:"" }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    {#Отправить#}
+                    <div class="col-lg-6 col-md-4">
+                        <input role="button" class="btn btn-primary float-right" type="submit" value="Предложить!" id="create-post-button">
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
     </div>
-</div>
 {% endblock %}

@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -23,7 +24,8 @@ urlpatterns = [
     url(r'^tag/', include('tag.urls')),
     url(r'^post/', include('post.urls')),
     url(r'^user/', include('user.urls')),
-    url(r'^comment/', include('comment.urls'))
+    url(r'^comment/', include('comment.urls')),
+    url(r'^$', RedirectView.as_view(url='post/'), name='homepage')
 ]
 
 urlpatterns += staticfiles_urlpatterns()

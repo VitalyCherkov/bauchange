@@ -24,3 +24,9 @@ class PostsByCategory(SingleObjectMixin, ListView):
 
     def get_queryset(self):
         return Post.posts.get_queryset_by_category(self.object.pk)
+
+
+class AllCategories(ListView):
+    model = Category
+    template_name = 'category/all-categories.html'
+    context_object_name = 'categories'

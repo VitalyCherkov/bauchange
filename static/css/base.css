@@ -24,6 +24,11 @@ p {
     margin-bottom: 0px;
 }
 
+.form-group-main {
+    margin: 0;
+    padding: 0;
+}
+
 .meta {
     color: #616161;
 }
@@ -230,4 +235,13 @@ Registration
 
 .reg textarea {
     min-height: 80px;
+}
+
+/*
+Categories
+ */
+
+.category-card {
+    float: left;
+    margin-bottom: 20px;
 }

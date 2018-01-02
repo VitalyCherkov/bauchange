@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+    {% for category in categories %}
+        <div class="category-card col-lg-4 col-md-6 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ category.label }}</h4>
+                    <p class="card-text">{{ category.description }}</p>
+                    <a href="{% url 'category:posts-by-category' pk=category.pk %}" class="card-link">
+                        Все инициативы ({{ category.post_set.count }})
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}

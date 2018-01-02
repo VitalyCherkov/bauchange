@@ -1,14 +1,11 @@
 from django.shortcuts import render
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
-from django.core.paginator import Paginator
+from django.views.generic.edit import CreateView
 from .models import Post
+from .forms import CreatePostForm
 from comment.models import Comment
 from comment.views import CommentsList
-
-
-def create(request):
-    return render(request, 'post/create.html', {})
 
 
 class DetailPost(DetailView):
@@ -43,3 +40,8 @@ class ListPost(ListView):
         context = super(ListPost, self).get_context_data(**kwargs)
         context['pag_options'] = ListPost.set_paginator_options(context)
         return context
+
+
+class CreatePost(CreateView):
+    template_name = 'post/create.html'
+    form_class = CreatePostForm
