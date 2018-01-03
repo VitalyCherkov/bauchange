@@ -1,8 +1,10 @@
 from django.db import models, IntegrityError
 from django.utils.translation import ugettext_lazy as _
+from django.shortcuts import get_object_or_404
 from django import forms
 from .models import Post
 from tag.models import Tag
+from userprofile.models import UserProfile
 
 
 class CreatePostForm(forms.ModelForm):
@@ -27,9 +29,6 @@ class CreatePostForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super(CreatePostForm, self).clean()
-        print(cleaned_data)
-
-        print()
         return cleaned_data
 
     def clean_tags(self):
@@ -54,23 +53,23 @@ class CreatePostForm(forms.ModelForm):
         return tags
 
     def save(self):
-        print('save debug')
-
         post = Post()
         post.title = self.cleaned_data['title']
         post.text = self.cleaned_data['text']
         post.category = self.cleaned_data['category']
+        post.author = self.author
         post.save()
 
         for tag_ in self.cleaned_data['tags']:
             try:
-
-                print("Tag: ", tag_)
                 post.tag.create(label=tag_)
             except IntegrityError:
                 post.tag.add(Tag.objects.get(label=tag_))
 
         return post
+
+    def set_user(self, user):
+        self.author = UserProfile.objects.get(user=user)
 
 
 

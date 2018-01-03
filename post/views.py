@@ -4,6 +4,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
 from .models import Post
+from userprofile.models import UserProfile
 from .forms import CreatePostForm
 from comment.models import Comment
 from comment.views import CommentsList
@@ -46,3 +47,7 @@ class ListPost(ListView):
 class CreatePost(LoginRequiredMixin, CreateView):
     template_name = 'post/create.html'
     form_class = CreatePostForm
+
+    def form_valid(self, form):
+        form.set_user(self.request.user)
+        return super(CreatePost, self).form_valid(form)
