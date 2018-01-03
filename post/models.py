@@ -2,7 +2,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from category.models import Category
 from tag.models import Tag
-from profile.models import Profile
+from userprofile.models import UserProfile
 
 
 class PostManager(models.Manager):
@@ -31,7 +31,7 @@ class Post(models.Model):
     views = models.IntegerField(default=0)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True)
     tag = models.ManyToManyField(Tag)
-    author = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True)
+    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, blank=True)
     posts = PostManager()
 
     def get_absolute_url(self):

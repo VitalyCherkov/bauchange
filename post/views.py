@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import AccessMixin
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
@@ -42,6 +43,6 @@ class ListPost(ListView):
         return context
 
 
-class CreatePost(CreateView):
+class CreatePost(LoginRequiredMixin, CreateView):
     template_name = 'post/create.html'
     form_class = CreatePostForm

@@ -1,6 +1,6 @@
 from django.db import models
 from post.models import Post
-from profile.models import Profile
+from userprofile.models import UserProfile
 
 
 class CommentManager(models.Manager):
@@ -17,7 +17,7 @@ class Comment(models.Model):
     rating = models.IntegerField(default=0)
     is_the_best = models.BooleanField(default=False)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    author = models.ForeignKey(Profile, blank=True, on_delete=models.CASCADE)
+    author = models.ForeignKey(UserProfile, blank=True, on_delete=models.CASCADE)
 
     comments = models.Manager()
     author_comments = CommentManager()
