@@ -23,7 +23,7 @@ urlpatterns = [
     url(r'^category/', include('category.urls')),
     url(r'^tag/', include('tag.urls')),
     url(r'^post/', include('post.urls')),
-    url(r'^user/', include('user.urls')),
+    url(r'^profile/', include('profile.urls')),
     url(r'^comment/', include('comment.urls')),
     url(r'^$', RedirectView.as_view(url='post/'), name='homepage')
 ]

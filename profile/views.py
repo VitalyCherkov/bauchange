@@ -4,9 +4,9 @@ from .models import User
 
 
 def OK(request, **kwargs):
-    return render(request, 'user/settings.html')
+    return render(request, 'profile/settings.html')
 
 #class UserProfile(DetailView):
-#    template_name = 'user/settings.html'
+#    template_name = 'profile/settings.html'
 #    model = User
 

@@ -10,7 +10,7 @@ class CommentsList(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(CommentsList, self).get_context_data()
-        context['comments'] = Comment.user_comments.get_queryset(self.args[0])
+        context['comments'] = Comment.author_comments.get_queryset(self.args[0])
 
         for comment in context['comments']:
             print(comment)

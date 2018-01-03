@@ -2,7 +2,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from category.models import Category
 from tag.models import Tag
-from user.models import User
+from profile.models import Profile
 
 
 class PostManager(models.Manager):
@@ -12,8 +12,8 @@ class PostManager(models.Manager):
     def get_popular(self):
         return self.get_queryset().order_by('-likes')
 
-    def get_queryset_by_user(self, user):
-        return self.get_queryset().filter(user=user)
+    def get_queryset_by_author(self, author):
+        return self.get_queryset().filter(author=author)
 
     def get_queryset_by_category(self, category):
         return self.get_queryset().filter(category=category)
@@ -29,9 +29,9 @@ class Post(models.Model):
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
     views = models.IntegerField(default=0)
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True)
     tag = models.ManyToManyField(Tag)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
+    author = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True)
     posts = PostManager()
 
     def get_absolute_url(self):

@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'category',
     'tag',
     'post',
-    'user',
+    'profile',
     'comment',
 ]
 

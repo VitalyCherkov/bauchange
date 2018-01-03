@@ -2,7 +2,7 @@ from random import randint
 from .models import Post
 from category.models import Category
 from comment.models import Comment
-from user.models import User
+from profile.models import User
 from tag.models import Tag
 from faker import lorem
 
