@@ -1,0 +1,7 @@
+{% if errors %}
+    {% for error in errors %}
+        <small class="form-text text-danger m-0 p-0" >
+            {{ error }}
+        </small>
+    {% endfor %}
+{% endif %}

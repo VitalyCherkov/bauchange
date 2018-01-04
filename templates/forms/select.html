@@ -1,0 +1,21 @@
+{% extends "forms/base-input-inline.html" %}
+
+{% block input_block %}
+    <select
+            class="form-control
+                {% if field.errors %} is-invalid {% endif %}
+            "
+            id="{{ field.id_for_label }}"
+            name="{{ field.html_name }}"
+    >
+        {% for index, category in field.field.choices %}
+            <option value="{{ index }}">
+                {{ category|default_if_none:"" }}
+            </option>
+        {% endfor %}
+    </select>
+{% endblock %}
+
+{% block label_block %}
+    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+{% endblock %}

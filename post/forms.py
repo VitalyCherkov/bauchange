@@ -53,6 +53,7 @@ class CreatePostForm(forms.ModelForm):
         return tags
 
     def save(self):
+        print(self.cleaned_data)
         post = Post()
         post.title = self.cleaned_data['title']
         post.text = self.cleaned_data['text']

@@ -1,0 +1,9 @@
+<div class="form-group">
+    {% block label_block %}{% endblock %}
+
+    {% include "forms/field-errors.html" with errors=field.errors %}
+
+    {% block input_block %}{% endblock %}
+
+    <small class="form-text text-muted">{{ field.help_text }}</small>
+</div>

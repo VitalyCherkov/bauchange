@@ -18,17 +18,29 @@
                     <a class="nav-link" href="{% url "category:all-categories" %}">Категории</a>
                 </li>
 
+                {% if request.user.is_authenticated %}
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" role="button" id="userDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Имечко Фамилия
+                        {{ request.user.first_name }} {{ request.user.last_name }}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="userDropDown">
-                        <a class="dropdown-item" href="#">Создать инициативу</a>
+                        <a class="dropdown-item" href="{% url "post:create" %}">Создать инициативу</a>
                         <a class="dropdown-item" href="#">Мои инициативы</a>
                         <a class="dropdown-item" href="#">Настройки</a>
-                        <a class="dropdown-item" href="#">Выход</a>
+                        <a class="dropdown-item" href="{% url "userprofile:logout" %}">Выход</a>
                     </div>
                 </li>
+                {% else %}
+                    <form class="form-inline">
+                        <li class="nav-item">
+                            <a class="btn btn-primary btn-sm" href="{% url "userprofile:login" %}">Вход</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-link btn-sm" href="{% url "userprofile:signup" %}">Регистрация</a>
+                        </li>
+                    </form>
+                {% endif %}
             </ul>
 
             <form class="form-inline my-2 my-lg-0">

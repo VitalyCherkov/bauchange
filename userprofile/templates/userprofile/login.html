@@ -1,21 +1,3 @@
-{#<!DOCTYPE html>#}
-{#<html lang="en">#}
-{#<head>#}
-{#    <meta charset="UTF-8">#}
-{#    <title>Login</title>#}
-{#</head>#}
-{#<body>#}
-{##}
-{#<form method="POST" action="{% url "userprofile:login" %}">#}
-{#    {% csrf_token %}#}
-{#    {{ form }}#}
-{#    <input type="submit" value="Sign In">#}
-{#</form>#}
-{##}
-{##}
-{#</body>#}
-{#</html>#}
-
 {% extends "base.html" %}
 
 {% block base_block %}
@@ -36,54 +18,9 @@
             {% endfor %}
         {% endif %}
 
-
-        {# Логин #}
-        <div class="form-group row">
-
-            <label for="{{ form.username.id_for_label }}" class="col-md-4 col-form-label">
-                {{ form.username.label }}
-            </label>
-            <div class="col-md-8">
-                {% if form.username.errors %}
-                    {% for error in form.username.errors %}
-                        <small class="form-text text-danger">{{ error }}</small>
-                    {% endfor %}
-                {% endif %}
-                <input
-                        type="text"
-                        class="form-control
-                            {% if form.username.errors or form.non_field_errors %}is-invalid{% endif %}
-                        "
-                        name="{{ form.username.html_name }}"
-                        id="{{ form.username.id_for_label }}"
-                        placeholder="Логин"
-                        value="{{ form.username.value|default_if_none:"" }}"
-                >
-            </div>
-        </div>
-
-
-        {# Пароль #}
-        <div class="form-group row">
-            <label for="{{ form.password.id_for_label }}" class="col-md-4 col-form-label">
-                {{ form.password.label }}
-            </label>
-            <div class="col-md-8">
-                {% if form.password.errors %}
-                    {% for error in form.password.errors %}
-                        <small class="form-text text-danger">{{ error }}</small>
-                    {% endfor %}
-                {% endif %}
-                <input
-                        type="password"
-                        class="form-control
-                            {% if form.password.errors or form.non_field_errors %}is-invalid{% endif %}
-                        "
-                        id="{{ form.password.id_for_label }}"
-                        name="{{ form.password.html_name }}"
-                        placeholder="Password"
-                >
-            </div>
+        <div class="col-lg-9 col-md-10 justify-content-center">
+            {% include "forms/charfield.html" with field=form.username %}
+            {% include "forms/password.html" with field=form.password %}
         </div>
 
         <input type="submit" class="btn btn-danger " id="login" value="Войти!">

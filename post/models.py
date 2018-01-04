@@ -29,7 +29,7 @@ class Post(models.Model):
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
     views = models.IntegerField(default=0)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     tag = models.ManyToManyField(Tag)
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, blank=True)
     posts = PostManager()

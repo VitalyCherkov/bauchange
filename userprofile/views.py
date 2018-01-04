@@ -1,10 +1,18 @@
 from django.shortcuts import render
-from django.views.generic.edit import FormView
+from django.views.generic.detail import DetailView
 from django.contrib.auth.views import LoginView
 from .forms import SignUpForm
+from .models import UserProfile
 
-def OK(request, **kwargs):
-    return render(request, 'userprofile/settings.html')
+class UserPage(DetailView):
+    model = UserProfile
+    template_name = 'userprofile/userpage.html'
+    context_object_name = 'userprofile'
+
+    def get_context_data(self, **kwargs):
+
+
+
 
 
 class SignUpView(LoginView):

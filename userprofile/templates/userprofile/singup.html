@@ -1,16 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-<form method="post" action="{% url "userprofile:signup" %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Зарегистрироваться!">
-</form>
+{% block base_block %}
+    {% with jumbotron_is_active=True page_title=page_title page_description=page_description %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}
 
-</body>
-</html>
+{% block content %}
+    {% include "post/list.html" %}
+
+    <div class="reg card">
+        <div class="card-body">
+            <h2 class="card-title">
+                Регистрация
+            </h2>
+
+            <form method="post" action="{% url "userprofile:signup" %}">
+                {% csrf_token %}
+
+                {% if form.errors %}
+                    {% for error in form.non_field_errors %}
+                        <small class="form-text text-danger">{{ error }}</small>
+                    {% endfor %}
+                {% endif %}
+
+                {% include "forms/email.html" with field=form.email %}
+                {% include "forms/charfield.html" with field=form.first_name %}
+                {% include "forms/charfield.html" with field=form.last_name %}
+                {% include "forms/password.html" with field=form.password %}
+                {% include "forms/password.html" with field=form.password_repeat %}
+                {% include "forms/textarea.html" with field=form.about %}
+                <input type="submit" class="btn btn-primary float-right" value="Зарегистрироваться">
+            </form>
+        </div>
+    </div>
+{% endblock %}
+

@@ -26,6 +26,10 @@ class SignUpForm(forms.Form):
     last_name = forms.CharField(max_length=User._meta.get_field('last_name').max_length)
     last_name.label = _('Фамилия')
 
+    about = forms.CharField(widget=forms.Textarea())
+    about.label = _('Расскажите о себе')
+    about.required = False
+
     def clean_email(self):
         email = self.cleaned_data['email']
         try:
@@ -41,13 +45,16 @@ class SignUpForm(forms.Form):
 
     def clean(self):
         cleaned_data = super(SignUpForm, self).clean()
-        if cleaned_data['password'] != cleaned_data['password_repeat']:
-            raise forms.ValidationError(
-                _('Введенные пароли не совпадают'),
-                code='do_not_match'
-            )
+        try:
+            if cleaned_data['password'] == cleaned_data['password_repeat']:
+                return cleaned_data
+        except Exception:
+            pass
 
-        return cleaned_data
+        raise forms.ValidationError(
+            _('Введенные пароли не совпадают'),
+            code='do_not_match'
+        )
 
     def save(self):
         user = User.objects.create_user(
@@ -63,7 +70,7 @@ class SignUpForm(forms.Form):
         user_profile = UserProfile(
             user=user
         )
-
+        user_profile.about = self.cleaned_data['about']
         user_profile.save()
         return user_profile
 
