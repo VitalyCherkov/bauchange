@@ -12,5 +12,6 @@ urlpatterns = [
             template_name='userprofile/login.html'),
         name='login'
         ),
-    url(r'^logout/$', LogoutView.as_view(), name='logout')
+    url(r'^logout/$', LogoutView.as_view(), name='logout'),
+    url(r'^signup/$', views.SignUpView.as_view(), name='signup')
 ]
