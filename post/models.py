@@ -23,6 +23,10 @@ class PostManager(models.Manager):
 
 
 class Post(models.Model):
+
+    class Meta:
+        ordering = ['-pub_date']
+
     title = models.CharField(max_length=250)
     text = models.TextField()
     pub_date = models.DateTimeField(auto_now_add=True)

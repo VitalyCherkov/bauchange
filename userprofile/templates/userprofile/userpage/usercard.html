@@ -36,7 +36,7 @@
                     <a  href="{% url "post:create" %}"><i class="fa fa-plus" aria-hidden="true"></i> Создать инициативу </a>
                 </li>
                 <li class="list-group-item">
-                    <a href="{% url "userprofile:logout" %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Выход</a>
+                    <a href="{% url "userprofile:logout" %}?next={{ request.get_full_path }}"><i class="fa fa-sign-out" aria-hidden="true"></i> Выход</a>
                 </li>
             {% endif %}
         </ul>
