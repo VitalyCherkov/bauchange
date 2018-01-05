@@ -268,6 +268,10 @@ Categories
 ---------------------------------------------------------------
 */
 
+.userpage-left-side {
+    min-width: 250px;
+}
+
 .userpage-card a {
     color: black;
 }
@@ -277,12 +281,6 @@ Categories
 }
 
 .userpage-body {
-    padding: 10px;
-}
-
-
-.userpage-left-side {
-    min-width: 250px;
     padding: 10px;
 }
 

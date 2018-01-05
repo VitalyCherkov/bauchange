@@ -23,20 +23,23 @@
             </li>
             <li class="list-group-item">
                 <div class="row">
-                    <div class = "col">Инициативы</div>
-                    <div class = "col">Рейтинг</div>
+                    <div class = "col">
+                        <div class="">Инициативы</div>
+                        <div class="">{{ object_list.count }}</div>
+                    </div>
+                    <div class = "col">
+                        <div class="">Рейтинг</div>
+                        <div class="">{{ userprofile.rating }}</div>
+                    </div>
                 </div>
-                <div class="row">
-                    <div class = "col">{{ object_list.count }}</div>
-                    <div class = "col">{{ userprofile.rating }}</div>
-                </div>
+
             </li>
             {% if request.user == userprofile.user %}
                 <li class="list-group-item">
-                    <a  href="{% url "post:create" %}"><i class="fa fa-plus" aria-hidden="true"></i> Создать инициативу </a>
+                    {% include "button-texts/create-post-a.html" %}
                 </li>
                 <li class="list-group-item">
-                    <a href="{% url "userprofile:logout" %}?next={{ request.get_full_path }}"><i class="fa fa-sign-out" aria-hidden="true"></i> Выход</a>
+                    {% include "button-texts/logout-a.html" %}
                 </li>
             {% endif %}
         </ul>
