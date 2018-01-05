@@ -13,7 +13,12 @@ class DetailPost(DetailView):
     template_name = 'post/detail.html'
     context_object_name = 'post'
 
+    # def get(self, request, *args, **kwargs):
+    #     self.object = self.get_object(queryset=Category.objects.all())
+    #     return super(PostsByCategory, self).get(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
+        self.object.take_a_view()
         context = super(DetailPost, self).get_context_data()
         context[CommentsList.context_object_name] = \
             Comment.author_comments.get_queryset(self.kwargs['pk'])

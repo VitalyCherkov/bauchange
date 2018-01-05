@@ -32,10 +32,16 @@ class Post(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     tag = models.ManyToManyField(Tag)
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, blank=True)
+
     posts = PostManager()
 
     def get_absolute_url(self):
         return reverse('post:detail', kwargs={'pk': self.pk})
+
+    def take_a_view(self):
+        self.views += 1
+        self.save()
+        return self.views
 
     def __str__(self):
         return '#{0}: {1}'.format(self.id, self.title)
