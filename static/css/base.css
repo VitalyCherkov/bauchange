@@ -124,8 +124,10 @@ p {
     line-height: 40px;
 }
 
-.sidebar {
-    min-width: 250px;
+.sidebar button {
+    font-size: 12px;
+    margin: 2px;
+    /*min-width: 250px;*/
 }
 
 .create-post {

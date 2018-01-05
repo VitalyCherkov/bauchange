@@ -1,0 +1,22 @@
+{% if request.user.is_authenticated %}
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" role="button" id="userDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ request.user.first_name }} {{ request.user.last_name }}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="userDropDown">
+            <a class="dropdown-item" href="{% url "post:create" %}">Создать инициативу</a>
+            <a class="dropdown-item" href="{{ context_userprofile.get_absolute_url }}">Профиль</a>
+            <a class="dropdown-item" href="{% url "userprofile:logout" %}?next={{ request.get_full_path }}">Выход</a>
+        </div>
+    </li>
+{% else %}
+    <form class="form-inline">
+        <li class="nav-item">
+            <a class="btn btn-primary btn-sm" href="{% url "userprofile:login" %}?next={{ request.get_full_path }}">Вход</a>
+        </li>
+        <li class="nav-item">
+            <a class="btn btn-link btn-sm" href="{% url "userprofile:signup" %}?next={{ request.get_full_path }}">Регистрация</a>
+        </li>
+    </form>
+{% endif %}

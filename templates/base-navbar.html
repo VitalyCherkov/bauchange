@@ -8,42 +8,31 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Популярное<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url "post:list" %}">Новое</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url "category:all-categories" %}">Категории</a>
-                </li>
 
-                {% if request.user.is_authenticated %}
+                {% for button in context_menu_buttons %}
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" role="button" id="userDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ request.user.first_name }} {{ request.user.last_name }}
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="userDropDown">
-                        <a class="dropdown-item" href="{% url "post:create" %}">Создать инициативу</a>
-                        <a class="dropdown-item" href="{{ context_userprofile.get_absolute_url }}">Профиль</a>
-                        <a class="dropdown-item" href="{% url "userprofile:logout" %}?next={{ request.get_full_path }}">Выход</a>
-                    </div>
-                </li>
-                {% else %}
-                    <form class="form-inline">
-                        <li class="nav-item">
-                            <a class="btn btn-primary btn-sm" href="{% url "userprofile:login" %}?next={{ request.get_full_path }}">Вход</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-link btn-sm" href="{% url "userprofile:signup" %}?next={{ request.get_full_path }}">Регистрация</a>
-                        </li>
-                    </form>
-                {% endif %}
+                    <li class="nav-item
+                        {% if button.url == request.path %}
+                            active
+                        {% endif %}
+                    ">
+                        <a class="nav-link" href="{{ button.url }}">{{ button.label }}
+                            <span class="sr-only">
+                                {% if button.url == request.path %}
+                                    active
+                                {% endif %}
+                            </span>
+                        </a>
+                    </li>
+
+                {% endfor %}
+
+                {% include "navbar/user-dropdown.html" %}
+
             </ul>
 
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                <input class="form-control mr-sm-2" style="width: 200px;" type="text" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div><!-- /.navbar-collapse -->

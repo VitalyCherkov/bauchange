@@ -1,4 +1,6 @@
 from userprofile.models import UserProfile
+from django.utils.translation import ugettext_lazy as _
+from django.urls import reverse_lazy
 
 
 def current_userprofile(request):
@@ -9,4 +11,26 @@ def current_userprofile(request):
 
     return {
         'context_userprofile': userprofile
+    }
+
+
+def menu_buttons(request):
+
+    buttons = [
+        {
+            'label': _('Популярное'),
+            'url': reverse_lazy('post:list')
+        },
+        {
+            'label': _('Новое'),
+            'url': reverse_lazy('post:list')
+        },
+        {
+            'label': _('Категории'),
+            'url': reverse_lazy('category:all-categories')
+        },
+    ]
+
+    return {
+        'context_menu_buttons': buttons
     }
