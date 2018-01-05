@@ -9,7 +9,7 @@
     <div class="author card">
         <img class="card-img-top" src="/upload/img/user_empty.png" alt="Author proto">
         <div class="card-body">
-            <h2 class="author-name card-title"><a href="{{ user_page }}">{{ post.author.user.first_name}} {{ post.author.user.last_name}}</a></h2>
+            <h2 class="author-name card-title"><a href="{{ post.author.get_absolute_url }}">{{ post.author.user.first_name}} {{ post.author.user.last_name}}</a></h2>
         </div>
     </div>
 

@@ -5,7 +5,7 @@ from . import views
 
 app_name = 'userprofile'
 urlpatterns = [
-    url(r'^(?P<pk>\d+)/', views.UserPage.as_view(), name='userpage'),
+    url(r'^(?P<pk>\d+)/', views.UserPageDetail.as_view(), name='userpage'),
     url(r'^login/$',
         LoginView.as_view(
             redirect_authenticated_user=True,

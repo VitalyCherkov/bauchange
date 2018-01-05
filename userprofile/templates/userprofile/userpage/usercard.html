@@ -1,0 +1,44 @@
+<div class="card text-center userpage-card">
+    <div class="card-header userpage-user-bg"></div>
+    <div class="userpage-photo-container">
+        <div class="userpage-photo-sq">
+            <img class="rounded-circle userpage-photo" src="/upload/img/user_empty.png">
+
+            {#Кнопка редактирования#}
+            {% if request.user == userprofile.user %}
+                <a class="userpage-edit-link">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                </a>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <div class="card-body userpage-user-info">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <h5 class="card-title">{{ userprofile.user.first_name }} {{ userprofile.user.last_name }}</h5>
+                <p class="card-text text-secondary">{{ userprofile.user.email }}</p>
+                <p class="card-text">{{ userprofile.about }}</p>
+            </li>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class = "col">Инициативы</div>
+                    <div class = "col">Рейтинг</div>
+                </div>
+                <div class="row">
+                    <div class = "col">{{ object_list.count }}</div>
+                    <div class = "col">{{ userprofile.rating }}</div>
+                </div>
+            </li>
+            {% if request.user == userprofile.user %}
+                <li class="list-group-item">
+                    <a  href="{% url "post:create" %}"><i class="fa fa-plus" aria-hidden="true"></i> Создать инициативу </a>
+                </li>
+                <li class="list-group-item">
+                    <a href="{% url "userprofile:logout" %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Выход</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>

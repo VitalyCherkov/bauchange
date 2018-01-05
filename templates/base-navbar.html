@@ -26,8 +26,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="userDropDown">
                         <a class="dropdown-item" href="{% url "post:create" %}">Создать инициативу</a>
-                        <a class="dropdown-item" href="#">Мои инициативы</a>
-                        <a class="dropdown-item" href="#">Настройки</a>
+                        <a class="dropdown-item" href="{{ context_userprofile.get_absolute_url }}">Профиль</a>
                         <a class="dropdown-item" href="{% url "userprofile:logout" %}">Выход</a>
                     </div>
                 </li>

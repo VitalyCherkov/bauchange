@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block content %}
+
+    <div class="row justify-content-center">
+
+        <div class="userpage-left-side col-lg-4 col-md-12 ">
+
+            {% include "userprofile/userpage/usercard.html" %}
+
+        </div>
+
+        <div class="col">
+            {% include "post/list.html" with posts_list=object_list %}
+        </div>
+
+    </div>
+
+{% endblock %}

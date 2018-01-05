@@ -71,6 +71,12 @@ p {
     float: right;
 }
 
+/*
+---------------------------------------------------------------
+|   Post mini
+---------------------------------------------------------------
+*/
+
 .post-mini {
     margin-bottom: 20px;
 }
@@ -88,6 +94,14 @@ p {
 
 .post-statistics ul {
     margin: 5px;
+}
+
+.author-info-mini {
+    display: block;
+    width: 250px;
+    height: 40px;
+    color: black;
+    font-size: 14px;
 }
 
 .author-photo-mini {
@@ -245,3 +259,79 @@ Categories
     float: left;
     margin-bottom: 20px;
 }
+
+/*
+---------------------------------------------------------------
+|   Userpage
+---------------------------------------------------------------
+*/
+
+.userpage-card a {
+    color: black;
+}
+
+.userpage-card a:hover {
+    color: #616161;
+}
+
+.userpage-body {
+    padding: 10px;
+}
+
+
+.userpage-left-side {
+    min-width: 250px;
+    padding: 10px;
+}
+
+.userpage-user-bg {
+    background: url("/upload/img/user_bg.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.userpage-user-bg {
+    height: 200px;
+    /*max-height: 200px;*/
+}
+
+.userpage-photo-container {
+    position: absolute;
+    top: 125px;
+    width: 100%;
+    text-align: center;
+}
+
+.userpage-photo-sq {
+    margin-left: auto;
+    margin-right: auto;
+    width: 150px;
+    height: 150px;
+}
+
+.userpage-photo {
+    width: 150px;
+    height: 150px;
+}
+
+.userpage-edit-link {
+    position: absolute;
+    bottom: 0;
+    display: block;
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+    text-align: center;
+    background-color: #EFEBE9;
+    opacity: 0.5;
+    border-radius: 20px;
+}
+
+.userpage-edit-link:hover {
+    opacity: 1;
+}
+
+.userpage-user-info {
+    padding: 90px 0 0 0;
+}
+

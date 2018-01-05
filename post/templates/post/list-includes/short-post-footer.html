@@ -11,9 +11,9 @@
                 </ul>
             </div>
         </div>
-        <div class="author-info-mini col-md-auto col-sm-auto row float-right">
+        <a class="author-info-mini col-md-auto col-sm-auto row float-right" href="{{ post.author.get_absolute_url }}">
             <img src="/upload/img/user_empty.png" class="author-photo-mini rounded float-left">
             <h4 class="author-name-mini">{{ post.author.user.first_name}} {{ post.author.user.last_name}}</h4>
-        </div>
+        </a>
     </div>
 </div>
