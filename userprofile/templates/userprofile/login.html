@@ -9,7 +9,7 @@
 
 {% block content %}
 
-    <form method="post" action="{% url "userprofile:login" %}">
+    <form method="post" action="{% url "userprofile:login" %}?next={{ next }}">
         {% csrf_token %}
 
         {% if form.errors %}

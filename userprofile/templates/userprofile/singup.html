@@ -15,7 +15,7 @@
                 Регистрация
             </h2>
 
-            <form method="post" action="{% url "userprofile:signup" %}">
+            <form method="post" action="{% url "userprofile:signup" %}?next={{ next }}">
                 {% csrf_token %}
 
                 {% if form.errors %}
