@@ -12,7 +12,9 @@
     <div class="reg card">
         <div class="card-body">
             <h2 class="card-title">
-                Регистрация
+                {% block form_title_block %}
+                    Регистрация
+                {% endblock %}
             </h2>
 
             <form method="post" action="{% url "userprofile:signup" %}?next={{ next }}">
@@ -24,11 +26,22 @@
                     {% endfor %}
                 {% endif %}
 
+                {# email #}
                 {% include "forms/email.html" with field=form.email %}
+
+                {# first name #}
                 {% include "forms/charfield.html" with field=form.first_name %}
+
+                {# second name #}
                 {% include "forms/charfield.html" with field=form.last_name %}
+
+                {# password #}
                 {% include "forms/password.html" with field=form.password %}
+
+                {# password repeat #}
                 {% include "forms/password.html" with field=form.password_repeat %}
+
+                {# about #}
                 {% include "forms/textarea.html" with field=form.about %}
                 <input type="submit" class="btn btn-primary float-right" value="Зарегистрироваться">
             </form>

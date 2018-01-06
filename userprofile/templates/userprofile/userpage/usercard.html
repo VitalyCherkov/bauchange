@@ -6,7 +6,7 @@
 
             {#Кнопка редактирования#}
             {% if request.user == userprofile.user %}
-                <a class="userpage-edit-link">
+                <a class="userpage-edit-link" href="{% url "userprofile:editprofile" pk=userprofile.pk %}">
                     <i class="fa fa-pencil" aria-hidden="true"></i>
                 </a>
             {% endif %}

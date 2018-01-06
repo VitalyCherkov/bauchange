@@ -37,6 +37,9 @@ class Post(models.Model):
     tag = models.ManyToManyField(Tag)
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, blank=True)
 
+    deleted = models.BooleanField(default=False)
+    edited = models.BooleanField(default=False)
+
     posts = PostManager()
 
     def get_absolute_url(self):

@@ -12,63 +12,32 @@
     <div class="reg card">
         <div class="card-body">
             <h2 class="card-title">
-                Настройки профиля
+                {% block form_title_block %}
+                    Настройки профиля
+                {% endblock %}
             </h2>
 
-            <form>
-                <div class="form-row">
-                    <div class="reg-contacts col-md-6">
-                        <div class="form-group">
-                            <div class="row justify-content-center">
-                                <img src="../img/user_empty.png" class="rounded">
-                            </div>
-                            <label for="ch-photo">Выберите фото</label>
-                            <input type="file" class="form-control-file" id="ch-photo" name="Выберите фото">
-                        </div>
-                    </div>
-                    <div class="reg-personal col-md-6">
-                        <div class="form-group">
-                            <label for="ch-email" class="form-control-label">Email</label>
-                            <input type="email" id="ch-email" placeholder="Email" class="form-control" value="imechko@fa.ru">
-                        </div>
-                        <div class="form-group">
-                            <label for="ch-firstName" class="form-control-label">Ваше имя</label>
-                            <input type="text" id="ch-firstName" placeholder="Ваше имя" class="form-control" value="Имечко">
-                        </div>
-                        <div class="form-group">
-                            <label for="ch-secondName" class="form-control-label">Ваша фамилия</label>
-                            <input type="text" id="ch-secondName" placeholder="Ваша фамилия" class="form-control" value="Фамилия">
-                        </div>
+            <form method="post" action="{% url "userprofile:editprofile" pk=context_userprofile.pk %}?next={{ next }}">
+                {% csrf_token %}
 
-                        <div>
-                            <div class="form-control-label">
-                                Пол
-                            </div>
+                {% if form.errors %}
+                    {% for error in form.non_field_errors %}
+                        <small class="form-text text-danger">{{ error }}</small>
+                    {% endfor %}
+                {% endif %}
 
-                            <div class="reg-sex form-group">
-                                <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="sex" id="ch-sexMale" value="male" checked>
-                                        Мужской
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="sex" id="ch-sexFemale" value="female">
-                                        Женский
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+                {# email #}
+                {% include "forms/email.html" with field=form.email %}
 
-                        <div class="form-group">
-                            <label class="form-control-label" for="ch-about">Расскажите о себе</label>
-                            <textarea class="form-control" id="ch-about">Что-то о себе...</textarea>
-                        </div>
+                {# first name #}
+                {% include "forms/charfield.html" with field=form.first_name %}
 
-                        <input type="submit" class="btn btn-primary float-right" value="Сохранить">
-                    </div>
-                </div>
+                {# second name #}
+                {% include "forms/charfield.html" with field=form.last_name %}
+
+                {# about #}
+                {% include "forms/textarea.html" with field=form.about %}
+                <input type="submit" class="btn btn-primary float-right" value="Сохранить">
             </form>
         </div>
     </div>

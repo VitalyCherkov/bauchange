@@ -5,6 +5,7 @@ from . import views
 
 app_name = 'userprofile'
 urlpatterns = [
+    url(r'^edit/(?P<pk>\d+)/', views.EditView.as_view(), name='editprofile'),
     url(r'^(?P<pk>\d+)/', views.UserPageDetail.as_view(), name='userpage'),
     url(r'^login/$',
         LoginView.as_view(

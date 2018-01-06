@@ -1,12 +1,16 @@
-from django.shortcuts import render
 from django.views.generic.detail import DetailView
 from django.views.generic.detail import SingleObjectMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic.list import ListView
+from django.views.generic.edit import UpdateView
 from django.contrib.auth.views import LoginView
+from django.shortcuts import get_object_or_404
 from .forms import SignUpForm
+from .forms import EditProfileForm
 from .models import UserProfile
 from post.models import Post
 from post.views import ListPost
+
 
 class UserPageDetail(SingleObjectMixin, ListView):
     model = UserProfile
@@ -38,10 +42,26 @@ class UserPage(DetailView):
         return context
 
 
-
-
 class SignUpView(LoginView):
 
     form_class = SignUpForm
     template_name = 'userprofile/singup.html'
     redirect_authenticated_user = True
+
+
+class EditView(UserPassesTestMixin, UpdateView):
+
+    model = UserProfile
+    template_name = 'userprofile/settings.html'
+    form_class = EditProfileForm
+    redirect_field_name = None
+
+    def get_form(self, form_class=None):
+        form = super(EditView, self).get_form()
+        form.update_initial()
+        return form
+
+    def test_func(self):
+
+        editing_user = get_object_or_404(UserProfile, pk=self.kwargs['pk']).user
+        return self.request.user.is_authenticated and self.request.user == editing_user
