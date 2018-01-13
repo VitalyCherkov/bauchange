@@ -25,9 +25,6 @@ class DetailPost(DetailView):
         context[CommentsList.context_object_name] = \
             Comment.author_comments.get_queryset(self.kwargs['pk'])
 
-        context['likes'] = len(LikeDislike.likes_dislikes.get_likes_by_post(self.object))
-        context['dislikes'] = len(LikeDislike.likes_dislikes.get_dislikes_by_post(self.object))
-
         return context
 
 
@@ -66,22 +63,13 @@ class VoteViewAJAX(View):
     vote_type = None
 
     def post(self, request, pk):
-
-        print(request, '\n\n', pk)
-
-        result = None
         cur_post = Post.posts.get(pk=pk)
-        print('user', request.user, '\n\n\n')
         cur_user_profile = UserProfile.objects.get(user=request.user)
-        print(cur_post)
-
         try:
-            print('kek')
             like_dislike = LikeDislike.likes_dislikes.get(
                 post=cur_post,
                 user_profile=cur_user_profile
             )
-            print('kek')
             if like_dislike.vote != self.vote_type:
                 like_dislike.vote = self.vote_type
                 like_dislike.save()
@@ -91,21 +79,16 @@ class VoteViewAJAX(View):
                 result = False
 
         except LikeDislike.DoesNotExist:
-            print('try')
             like_dislike = LikeDislike(
                 user_profile=cur_user_profile,
                 post=cur_post,
                 vote=self.vote_type
             )
-            print('catch')
             like_dislike.save()
             result = True
 
-        likes_count = len(cur_post.like_dislike.all().filter(likedislike__vote=LikeDislike.LIKE))
-        dislikes_count = len(cur_post.like_dislike.all().filter(likedislike__vote=LikeDislike.DISLIKE))
-        print('likes_count: ', likes_count)
-        print('dislikes_count: ', dislikes_count)
-
+        likes_count = cur_post.get_likes_count()
+        dislikes_count = cur_post.get_dislikes_count()
         return HttpResponse(
 
             json.dumps({

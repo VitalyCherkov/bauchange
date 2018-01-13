@@ -46,8 +46,11 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('post:detail', kwargs={'pk': self.pk})
 
-    def get_likes(self):
-        return
+    def get_likes_count(self):
+        return len(self.like_dislike.all().filter(likedislike__vote=LikeDislike.LIKE))
+
+    def get_dislikes_count(self):
+        return len(self.like_dislike.all().filter(likedislike__vote=LikeDislike.DISLIKE))
 
     def take_a_view(self):
         self.views += 1

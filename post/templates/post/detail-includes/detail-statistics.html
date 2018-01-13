@@ -7,7 +7,7 @@
         >
 
             <span>За </span>
-            <span data-count="like">{{ likes }}</span>
+            <span data-count="like">{{ post.get_likes_count }}</span>
         </a>
 
         <a class="btn btn-outline-secondary btn-outline-danger"
@@ -16,7 +16,7 @@
                 data-id="{{ post.id }}"
         >
             <span>Против </span>
-            <span data-count="dislike">{{ dislikes }}</span>
+            <span data-count="dislike">{{ post.get_dislikes_count }}</span>
         </a>
     </div>
 
