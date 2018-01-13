@@ -1,7 +1,23 @@
 <div class="post-statistics">
     <div class="post-votes btn-group">
-        <button type="button" class="btn btn-outline-secondary btn-outline-success">За {{ post.likes }}</button>
-        <button type="button" class="btn btn-outline-secondary btn-outline-danger">Против {{ post.dislikes }}</button>
+        <a class="btn btn-outline-secondary btn-outline-success"
+                data-action="like"
+                data-url="{% url "post:like" pk=post.pk %}"
+                data-id="{{ post.id }}"
+        >
+
+            <span>За </span>
+            <span data-count="like">{{ likes }}</span>
+        </a>
+
+        <a class="btn btn-outline-secondary btn-outline-danger"
+                data-action="dislike"
+                data-url="{% url "post:dislike" pk=post.pk %}"
+                data-id="{{ post.id }}"
+        >
+            <span>Против </span>
+            <span data-count="dislike">{{ dislikes }}</span>
+        </a>
     </div>
 
     <div class="post-views float-right">

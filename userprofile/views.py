@@ -31,7 +31,6 @@ class UserPageDetail(SingleObjectMixin, ListView):
         return Post.posts.get_queryset_by_author(self.object.pk)
 
 
-
 class UserPage(DetailView):
     model = UserProfile
     template_name = 'userprofile/userpage.html'
