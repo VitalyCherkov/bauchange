@@ -23,7 +23,13 @@ class DetailPost(DetailView):
         self.object.take_a_view()
         context = super(DetailPost, self).get_context_data()
         context[CommentsList.context_object_name] = \
-            Comment.author_comments.get_queryset(self.kwargs['pk'])
+            Comment.author_comments.get_comments_by_post(self.kwargs['pk'])
+
+        vote = self.object.voted_by_cur(user=self.request.user)
+        if vote == 'like':
+            context['is_liked'] = 'active'
+        elif vote == 'dislike':
+            context['is_disliked'] = 'active'
 
         return context
 
@@ -63,6 +69,13 @@ class VoteViewAJAX(View):
     vote_type = None
 
     def post(self, request, pk):
+        if not request.user.is_authenticated():
+            return HttpResponse(
+                json.dumps({}),
+                content_type='application/json'
+            )
+
+
         cur_post = Post.posts.get(pk=pk)
         cur_user_profile = UserProfile.objects.get(user=request.user)
         try:

@@ -52,6 +52,17 @@ class Post(models.Model):
     def get_dislikes_count(self):
         return len(self.like_dislike.all().filter(likedislike__vote=LikeDislike.DISLIKE))
 
+    def voted_by_cur(self, user):
+        cur_user = UserProfile.get_current_userprofile(user)
+
+        try:
+            vote = LikeDislike.likes_dislikes.get(user_profile=cur_user, post=self)
+            vote = 'like' if vote.vote == LikeDislike.LIKE else 'dislike'
+        except LikeDislike.DoesNotExist:
+            vote = None
+
+        return vote
+
     def take_a_view(self):
         self.views += 1
         self.save()
