@@ -12,7 +12,7 @@ function vote() {
     var url = vote.data('url');
     var pk = vote.data('id');
     console.log(url);
-    var opposite = getOppositeVote(vote)
+    var opposite = getOppositeVote(vote);
     opposite.removeClass('active');
 
     $.ajax({

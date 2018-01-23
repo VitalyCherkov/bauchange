@@ -16,11 +16,15 @@ class CommentViewSet(viewsets.ModelViewSet):
     }
 
     action = None
+    extra_context = None
     queryset = Comment.comments.all()
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
 
     def get_serializer_class(self):
         return self.serializers[self.action]
+
+    def get_serializer_context(self):
+        return self.extra_context
 
     def create(self, request, *args, **kwargs):
         self.action = CommentViewSet.CREATE_ACTION
@@ -38,10 +42,13 @@ class CommentViewSet(viewsets.ModelViewSet):
         self.action = CommentViewSet.VOTE_ACTION
         comment = self.get_object()
 
-        comment.do_vote(
+        result = comment.do_vote(
             user_profile=UserProfile.get_current_userprofile(request.user),
             action=request.data['action'])
 
+        self.extra_context = {
+            'result': result
+        }
         serializer = self.get_serializer(comment)
         return Response(serializer.data)
         

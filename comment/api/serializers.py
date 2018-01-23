@@ -34,10 +34,19 @@ class AddCommentSerializer(serializers.ModelSerializer):
 
 class CommentVotesSerializer(serializers.ModelSerializer):
     rating = serializers.CharField(source='rating.get_total', read_only=True)
+    result = serializers.SerializerMethodField()
+
 
     class Meta:
         model = Comment
-        fields = ('rating', 'id')
+        fields = ('rating', 'id', 'result')
+
+    def get_result(self, obj):
+        try:
+            return self.context['result']
+        except:
+            return None
+
 
 
 
