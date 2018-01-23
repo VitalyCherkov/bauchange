@@ -1,18 +1,13 @@
-<div class="post-comments">
+<div id="post-comments">
     <h4 class="card-subtitle">Комментарии ({{ comments.count }})</h4>
 
-    {% for comment in comments %}
-        {% include "comment/item.html" with comment=comment %}
-    {% endfor %}
+    {% include "comment/add_form.html" %}
 
-    <div class="comment row create-comment">
-        <div class="comment-author-photo col">
-            <img src="/bauchange_fish/img/user_empty.png" class="rounded">
-        </div>
-        <form class="comment-content col">
-            <textarea class="form-control" placeholder="Напишите комментарий"></textarea>
-            <input class="btn btn-primary float-right" id="send-comment" type="submit" value="Отправить">
-        </form>
+    <div id="post-comments-list">
+        {% for comment in comments %}
+            {% include "comment/item-django-template.html" with comment=comment %}
+        {% endfor %}
+
+        {% include "comment/item-js-template.html" %}
     </div>
-
 </div>

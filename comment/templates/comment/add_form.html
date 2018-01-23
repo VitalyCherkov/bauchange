@@ -1,0 +1,13 @@
+<div class="comment row create-comment">
+    <div class="comment-author-photo col">
+        <img src="/bauchange_fish/img/user_empty.png" class="rounded">
+    </div>
+
+    <form id="add-comment-form" class="comment-content col" method="POST" action="javascript:void(null);" onsubmit="add_comment_form()"
+          data-url="{% url "comments:comment-create" %}"
+          data-post="{{ post.pk }}">
+        <textarea class="form-control" placeholder="Напишите комментарий" name="text"></textarea>
+        <input class="btn btn-primary float-right" id="send-comment" type="submit" value="Отправить">
+    </form>
+
+</div>

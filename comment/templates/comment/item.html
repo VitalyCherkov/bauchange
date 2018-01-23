@@ -1,21 +1,20 @@
 <div class="comment row">
-
-        <div class="comment-author-photo col">
-            <img src="/bauchange_fish/img/user_empty.png" class="rounded">
-        </div>
-        <div class="comment-content col">
-            <p class="comment-author">{{ comment.user.name }}</p>
-            <p class="comment-text">
-                {{ comment.text }}
-            </p>
-            <div class="comment-footer">
-                <span class="comment-pub-date meta">{{ comment.pub_date }}</span>
-                <span class="comment-votes btn-group float-right" role="group">
+    <div class="comment-author-photo col">
+        <img src="/bauchange_fish/img/user_empty.png" class="rounded">
+    </div>
+    <div class="comment-content col">
+        <p class="comment-author">{{ username }}</p>
+        <p class="comment-text">
+            {{ comment.text }}
+        </p>
+        <div class="comment-footer">
+            <span class="comment-pub-date meta">{{ pub_date }}</span>
+            <span class="comment-votes btn-group float-right" role="group">
                     <button type="button" class="btn btn-sm btn-outline-success">+</button>
-                    <button type="button" class="btn btn-sm btn-light" disabled>{{ comment.rating }}</button>
+                    <button type="button" class="btn btn-sm btn-light" disabled>{{ rating }}</button>
                     <button type="button" class="btn btn-sm btn-outline-danger">-</button>
                 </span>
-            </div>
-            <div class="dropdown-divider"></div>
         </div>
+        <div class="dropdown-divider"></div>
     </div>
+</div>
