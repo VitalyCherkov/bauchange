@@ -1,0 +1,31 @@
+<span
+        class="comment-votes btn-group float-right"
+        role="group"
+>
+    <button
+            type="button"
+            class="btn btn-sm btn-outline-success"
+            data-url="{{ vote_url }}"
+            data-action="like-comment"
+    >
+        +
+    </button>
+
+    <button
+            type="button"
+            class="btn btn-sm btn-light rating-comment"
+            disabled
+            data-action="rating-comment"
+    >
+        {{ rating }}
+    </button>
+
+    <button
+            type="button"
+            class="btn btn-sm btn-outline-danger"
+            data-url="{{ vote_url }}"
+            data-action="dislike-comment"
+    >
+        -
+    </button>
+</span>

@@ -1,6 +1,8 @@
 from django.db import models
-from django.shortcuts import get_object_or_404
-from post.models import Post
+from django.shortcuts import get_object_or_404, reverse
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericRelation
+from post.models import Post, Vote, do_vote as _do_vote
 from userprofile.models import UserProfile
 
 
@@ -30,7 +32,7 @@ class Comment(models.Model):
     pub_date = models.DateTimeField(auto_now_add=True)
     is_the_best = models.BooleanField(default=False)
 
-    rating = models.ManyToManyField(UserProfile, related_name='liked_comments')
+    rating = GenericRelation(Vote, related_query_name='comments')
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     author = models.ForeignKey(UserProfile, blank=True, on_delete=models.CASCADE)
 
@@ -42,3 +44,13 @@ class Comment(models.Model):
 
     def __str__(self):
         return "{0}: {1}...".format(self.pub_date, self.text[:50])
+
+    def get_vote_url(self):
+        return reverse('comments:comment-vote', kwargs={'pk': self.pk})
+
+    def do_vote(self, user_profile, action):
+        return _do_vote(obj=self, user_profile=user_profile, action=action)
+
+
+
+

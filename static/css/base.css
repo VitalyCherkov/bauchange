@@ -216,7 +216,7 @@ p {
     padding: 0;
     max-width: 60px;
     height: 60px;
-    margin: 10px 10px auto 0;
+    margin: 10px 5px auto 0;
 }
 
 .comment-author-photo img {
@@ -229,11 +229,16 @@ p {
 }
 
 .comment-content {
+    min-width: 200px;
 }
 
 .comment textarea {
     margin-bottom: 10px;
     min-height: 80px;
+}
+
+.comment-pub-date {
+    font-size: 12px;
 }
 
 .comment-footer span {

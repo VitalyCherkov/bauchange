@@ -1,13 +1,13 @@
 <div class="post-content">
-            <h2 class="card-title">
-                {{ post.title }}
-                <span class="post-category-mini badge-success">{{ post.category }}</span>
-            </h2>
+    <h2 class="card-title">
+        {{ post.title }}
+        <span class="post-category-mini badge-success">{{ post.category }}</span>
+    </h2>
 
-            <p class="card-text">{{ post.text }}</p>
+    <p class="card-text">{{ post.text }}</p>
 
-            <div class="dropdown-divider"></div>
+    <div class="dropdown-divider"></div>
 
-            {% include "post/detail-includes/detail-meta.html" %}
-            {% include "post/detail-includes/detail-statistics.html" %}
+    {% include "post/detail-includes/detail-meta.html" %}
+    {% include "post/detail-includes/detail-statistics.html" %}
 </div>

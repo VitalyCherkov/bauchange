@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from comment.models import Comment, Post, UserProfile
+from comment.models import Comment, Post, UserProfile, Vote
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -13,17 +13,16 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class AddCommentSerializer(serializers.ModelSerializer):
-    author = serializers.ReadOnlyField(source='author.user.first_name')
+    id = serializers.IntegerField(read_only=True)
+    author = serializers.ReadOnlyField(source='author.__str__')
     pub_date = serializers.DateTimeField(read_only=True)
     rating = serializers.IntegerField(source='rating.count', read_only=True)
 
     class Meta:
         model = Comment
-        fields = ('text', 'author', 'post', 'pub_date', 'rating')
+        fields = ('id', 'text', 'author', 'post', 'pub_date', 'rating')
 
     def create(self, validated_data):
-        print('serializer/create')
-        print(validated_data)
         comment = Comment(
             text=validated_data['text'],
             author=validated_data['author'],
@@ -31,6 +30,16 @@ class AddCommentSerializer(serializers.ModelSerializer):
         )
         comment.save()
         return comment
+
+
+class CommentVotesSerializer(serializers.ModelSerializer):
+    rating = serializers.CharField(source='rating.get_total', read_only=True)
+
+    class Meta:
+        model = Comment
+        fields = ('rating', 'id')
+
+
 
 
 

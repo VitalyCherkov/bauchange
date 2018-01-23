@@ -144,3 +144,21 @@ STATICFILES_DIRS = (
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+"""
+
+REST FRAMEWORK
+
+"""
+
+REST_FRAMEWORK = {
+    'DATETIME_FORMAT': "%H:%M:%S",
+}
+
+''' --------------------------------------------------------------------------------------
+LOCAL VALUES
+-------------------------------------------------------------------------------------- '''
+
+LIKE = 1
+DISLIKE = -1

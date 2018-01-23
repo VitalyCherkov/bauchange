@@ -15,4 +15,5 @@ class CreateCommentForm(forms.ModelForm):
         ]
 
     def save(self, commit=True):
+        print('kek')
         comment = Comment(author=self.request.user)

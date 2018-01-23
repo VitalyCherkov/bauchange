@@ -1,26 +1,13 @@
+from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
 from category.models import Category
 from tag.models import Tag
 from userprofile.models import UserProfile
-from django.utils.translation import ugettext_lazy as _
-
-
-class PostManager(models.Manager):
-    def get_queryset(self):
-        return super(PostManager, self).get_queryset()
-
-    def get_popular(self):
-        return self.get_queryset().order_by('-likes')
-
-    def get_queryset_by_author(self, author):
-        return self.get_queryset().filter(author=author)
-
-    def get_queryset_by_category(self, category):
-        return self.get_queryset().filter(category=category)
-
-    def get_queryset_by_tag(self, tag):
-        return self.get_queryset().filter(tag=tag)
+from bauchange import settings
+from . import model_managers
 
 
 class Post(models.Model):
@@ -41,23 +28,27 @@ class Post(models.Model):
     deleted = models.BooleanField(default=False)
     edited = models.BooleanField(default=False)
 
-    posts = PostManager()
+    posts = model_managers.PostManager()
 
     def get_absolute_url(self):
         return reverse('post:detail', kwargs={'pk': self.pk})
 
     def get_likes_count(self):
-        return len(self.like_dislike.all().filter(likedislike__vote=LikeDislike.LIKE))
+        return len(self.like_dislike.all().filter(likedislike__vote=settings.LIKE))
 
     def get_dislikes_count(self):
-        return len(self.like_dislike.all().filter(likedislike__vote=LikeDislike.DISLIKE))
+        return len(self.like_dislike.all().filter(likedislike__vote=settings.DISLIKE))
 
     def voted_by_cur(self, user):
-        cur_user = UserProfile.get_current_userprofile(user)
+
+        if user.is_authenticated:
+            cur_user = UserProfile.get_current_userprofile(user)
+        else:
+            cur_user = None
 
         try:
             vote = LikeDislike.likes_dislikes.get(user_profile=cur_user, post=self)
-            vote = 'like' if vote.vote == LikeDislike.LIKE else 'dislike'
+            vote = 'like' if vote.vote == settings.LIKE else 'dislike'
         except LikeDislike.DoesNotExist:
             vote = None
 
@@ -72,36 +63,10 @@ class Post(models.Model):
         return '#{0}: {1}'.format(self.id, self.title)
 
 
-class LikeDislikeManager(models.Manager):
-    def get_queryset(self):
-        return super(LikeDislikeManager, self).get_queryset()
-
-    def get_likes(self):
-        return self.get_queryset().filter(vote=LikeDislike.LIKE)
-
-    def get_dislikes(self):
-        return self.get_queryset().filter(vote=LikeDislike.DISLIKE)
-
-    def get_likes_by_post(self, post):
-        return self.get_likes().filter(post__pk=post.pk)
-
-    def get_dislikes_by_post(self, post):
-        return self.get_dislikes().filter(post__pk=post.pk)
-
-    def get_likes_by_user(self, user_profile):
-        return self.get_likes().filter(user_profile__pk=user_profile.pk)
-
-    def get_dislikes_by_user(self, user_profile):
-        return self.get_dislikes().filter(user_profile__pk=user_profile.pk)
-
-
 class LikeDislike(models.Model):
-    LIKE = 1
-    DISLIKE = -1
-
     VOTES = (
-        (DISLIKE, 'Dislike'),
-        (LIKE, 'Like')
+        (settings.DISLIKE, 'Dislike'),
+        (settings.LIKE, 'Like')
     )
 
     vote = models.SmallIntegerField(choices=VOTES)
@@ -109,10 +74,46 @@ class LikeDislike(models.Model):
     user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
     def __str__(self):
-        value = 'like' if self.vote == self.LIKE else 'dislike'
+        value = 'like' if self.vote == settings.LIKE else 'dislike'
         return 'Post_{0} -{1}- User_{2}'.format(self.post.pk, value, self.user_profile.pk)
 
-    likes_dislikes = LikeDislikeManager()
+    likes_dislikes = model_managers.LikeDislikeManager()
+
+
+class Vote(models.Model):
+    VOTES = (
+        (settings.LIKE, 'Like'),
+        (settings.DISLIKE, 'Dislike')
+    )
+
+    action = models.SmallIntegerField(choices=VOTES)
+    user_profile = models.ForeignKey(UserProfile, verbose_name=_('Пользователь'))
+
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey()
+
+    objects = model_managers.VotesManager()
+
+
+def do_vote(obj, user_profile, action):
+    try:
+        vote = Vote.objects.get(
+            content_type=ContentType.objects.get_for_model(obj),
+            object_id=obj.id,
+            user_profile=user_profile
+        )
+        if vote.action is not int(action):
+            vote.action = action
+            vote.save()
+            return action
+        else:
+            vote.delete()
+            return None
+
+    except Vote.DoesNotExist:
+        obj.rating.create(user_profile=user_profile, action=action)
+        return action
 
 
 

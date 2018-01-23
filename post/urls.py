@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from . import views
+from bauchange import settings
 
 
 app_name = 'post'
@@ -8,11 +9,11 @@ urlpatterns = [
         name='create'),
 
     url(r'^(?P<pk>\d+)/like',
-        views.VoteViewAJAX.as_view(vote_type=views.LikeDislike.LIKE),
+        views.VoteViewAJAX.as_view(vote_type=settings.LIKE),
         name='like'),
 
     url(r'^(?P<pk>\d+)/dislike',
-        views.VoteViewAJAX.as_view(vote_type=views.LikeDislike.DISLIKE),
+        views.VoteViewAJAX.as_view(vote_type=settings.DISLIKE),
         name='dislike'),
 
     url(r'^(?P<pk>\d+)/', views.DetailPost.as_view(),

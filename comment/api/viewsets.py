@@ -1,24 +1,22 @@
 from rest_framework import viewsets, status, permissions
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.reverse import reverse
-from comment.api.serializers import CommentSerializer, AddCommentSerializer
+from comment.api.serializers import CommentSerializer, AddCommentSerializer, CommentVotesSerializer
 from comment.models import Comment
 from userprofile.models import UserProfile
-from post.models import Post
 
 
 class CommentViewSet(viewsets.ModelViewSet):
     CREATE_ACTION = 'create'
     DETAIL_ACTION = 'detail'
+    VOTE_ACTION = 'like'
     serializers = {
         CREATE_ACTION: AddCommentSerializer,
         DETAIL_ACTION: CommentSerializer,
+        VOTE_ACTION: CommentVotesSerializer
     }
 
     action = None
     queryset = Comment.comments.all()
-    # serializer_class = AddCommentSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
 
     def get_serializer_class(self):
@@ -34,8 +32,18 @@ class CommentViewSet(viewsets.ModelViewSet):
         
     def retrieve(self, request, *args, **kwargs):
         self.action = CommentViewSet.DETAIL_ACTION
-        print('kek lol retrieve')
         return super(CommentViewSet, self).retrieve(request, args, kwargs)
+
+    def vote(self, request, *args, **kwargs):
+        self.action = CommentViewSet.VOTE_ACTION
+        comment = self.get_object()
+
+        comment.do_vote(
+            user_profile=UserProfile.get_current_userprofile(request.user),
+            action=request.data['action'])
+
+        serializer = self.get_serializer(comment)
+        return Response(serializer.data)
         
 
 
