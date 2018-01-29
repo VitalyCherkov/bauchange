@@ -36,8 +36,8 @@ function add_comment_form() {
 }
 
 function draw_vote_result(vote_block, result) {
-    var like = vote_block.find('[data-action="like-comment"]');
-    var dislike = vote_block.find('[data-action="dislike-comment"]');
+    var like = vote_block.find('[data-action="like"]');
+    var dislike = vote_block.find('[data-action="dislike"]');
     like.removeClass('active');
     dislike.removeClass('active');
 
@@ -57,7 +57,7 @@ function vote_for_comment() {
     var vote = $(this);
     var url = vote.data('url');
     var action = vote.data('action');
-    action = (action == 'like-comment') ? LIKE : DISLIKE;
+    action = (action == 'like') ? LIKE : DISLIKE;
     $.ajax({
         url: url,
         type: 'POST',
@@ -67,16 +67,15 @@ function vote_for_comment() {
         success: function (responce) {
             console.log(responce)
             var parent = vote.closest('.comment-votes');
-            parent.find('[data-action="rating-comment"]').text(responce.rating);
+            parent.find('[data-action="rating"]').text(responce.rating);
             draw_vote_result(parent, responce.result)
-
         }
     });
 }
 
 $(function() {
-    $('[data-action="like-comment"]').click(vote_for_comment);
-    $('[data-action="dislike-comment"]').click(vote_for_comment);
+    $('[data-action="like"]').click(vote_for_comment);
+    $('[data-action="dislike"]').click(vote_for_comment);
 });
 
 

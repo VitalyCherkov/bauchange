@@ -1,8 +1,7 @@
-from rest_framework import viewsets, status, permissions
+from rest_framework import viewsets, permissions
 from rest_framework.response import Response
-from comment.api.serializers import CommentSerializer, AddCommentSerializer, CommentVotesSerializer
+from .serializers import CommentSerializer, CommentVotesSerializer
 from comment.models import Comment
-from userprofile.models import UserProfile
 
 
 class CommentViewSet(viewsets.ModelViewSet):
@@ -10,28 +9,30 @@ class CommentViewSet(viewsets.ModelViewSet):
     DETAIL_ACTION = 'detail'
     VOTE_ACTION = 'like'
     serializers = {
-        CREATE_ACTION: AddCommentSerializer,
+        CREATE_ACTION: CommentSerializer,
         DETAIL_ACTION: CommentSerializer,
         VOTE_ACTION: CommentVotesSerializer
     }
 
     action = None
-    extra_context = None
+    extra_context = {}
     queryset = Comment.comments.all()
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
 
+    def get_serializer_context(self):
+        context = super(CommentViewSet, self).get_serializer_context()
+        context.update(self.extra_context)
+        return context
+
     def get_serializer_class(self):
         return self.serializers[self.action]
-
-    def get_serializer_context(self):
-        return self.extra_context
 
     def create(self, request, *args, **kwargs):
         self.action = CommentViewSet.CREATE_ACTION
         return super(CommentViewSet, self).create(request, args, kwargs)
 
     def perform_create(self, serializer):
-        user_profile = UserProfile.get_current_userprofile(self.request.user)
+        user_profile = self.request.user.user_profile
         serializer.save(author=user_profile)
         
     def retrieve(self, request, *args, **kwargs):
@@ -43,12 +44,12 @@ class CommentViewSet(viewsets.ModelViewSet):
         comment = self.get_object()
 
         result = comment.do_vote(
-            user_profile=UserProfile.get_current_userprofile(request.user),
-            action=request.data['action'])
+            user_profile=request.user.user_profile,
+            action=request.data['action']
+        )
 
-        self.extra_context = {
-            'result': result
-        }
+        self.extra_context['result'] = result
+
         serializer = self.get_serializer(comment)
         return Response(serializer.data)
         

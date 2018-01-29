@@ -116,7 +116,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LOGIN_URL = reverse_lazy('userprofile:login')
 LOGIN_REDIRECT_URL = reverse_lazy('post:list')
-
 LOGOUT_REDIRECT_URL = reverse_lazy('post:list')
 
 

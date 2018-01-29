@@ -22,7 +22,7 @@ def menu_buttons(request):
     buttons = [
         {
             'label': _('Популярное'),
-            'url': reverse_lazy('post:list')
+            'url': reverse_lazy('post:popular')
         },
         {
             'label': _('Новое'),

@@ -6,7 +6,7 @@ class PostManager(models.Manager):
         return super(PostManager, self).get_queryset()
 
     def get_popular(self):
-        return self.get_queryset().order_by('-likes')
+        return self.get_queryset().order_by('-views')
 
     def get_queryset_by_author(self, author):
         return self.get_queryset().filter(author=author)
@@ -51,5 +51,4 @@ class VotesManager(models.Manager):
         return self.get_queryset().filter(action=settings.DISLIKE)
 
     def get_total(self):
-        print('BIG KEK')
         return self.get_likes().count() - self.get_dislikes().count()

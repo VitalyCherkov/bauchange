@@ -27,10 +27,6 @@ class CreatePostForm(forms.ModelForm):
             'title': 'Максимальная длина - 250 символов.'
         }
 
-    def clean(self):
-        cleaned_data = super(CreatePostForm, self).clean()
-        return cleaned_data
-
     def clean_tags(self):
         tags = self.cleaned_data['tags']
         tags = tags.split()

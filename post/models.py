@@ -2,12 +2,58 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from category.models import Category
 from tag.models import Tag
 from userprofile.models import UserProfile
 from bauchange import settings
 from . import model_managers
+
+
+class Vote(models.Model):
+    VOTES = (
+        (settings.LIKE, 'Like'),
+        (settings.DISLIKE, 'Dislike')
+    )
+
+    action = models.SmallIntegerField(choices=VOTES)
+    user_profile = models.ForeignKey(UserProfile, verbose_name=_('Пользователь'))
+
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey()
+
+    def __str__(self):
+        action = 'LIKE   ' if self.action is settings.LIKE else 'DISLIKE'
+
+        return '{0}_{1}   {2}   {3}'.format(
+            self.content_type,
+            self.object_id,
+            action,
+            self.user_profile
+        )
+
+    objects = model_managers.VotesManager()
+
+
+def do_vote_base(obj, user_profile, action):
+    try:
+        vote = Vote.objects.get(
+            content_type=ContentType.objects.get_for_model(obj),
+            object_id=obj.id,
+            user_profile=user_profile
+        )
+        if vote.action is not int(action):
+            vote.action = action
+            vote.save()
+            return action
+        else:
+            vote.delete()
+            return None
+
+    except Vote.DoesNotExist:
+        obj.rating.create(user_profile=user_profile, action=action)
+        return action
 
 
 class Post(models.Model):
@@ -19,6 +65,7 @@ class Post(models.Model):
     text = models.TextField()
     pub_date = models.DateTimeField(auto_now_add=True)
     like_dislike = models.ManyToManyField(UserProfile, through='LikeDislike')
+    rating = GenericRelation(Vote, related_query_name='posts')
 
     views = models.IntegerField(default=0)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
@@ -42,7 +89,7 @@ class Post(models.Model):
     def voted_by_cur(self, user):
 
         if user.is_authenticated:
-            cur_user = UserProfile.get_current_userprofile(user)
+            cur_user = user.user_profile
         else:
             cur_user = None
 
@@ -58,6 +105,9 @@ class Post(models.Model):
         self.views += 1
         self.save()
         return self.views
+
+    def do_vote(self, user_profile, action):
+        return do_vote_base(obj=self, user_profile=user_profile, action=action)
 
     def __str__(self):
         return '#{0}: {1}'.format(self.id, self.title)
@@ -80,40 +130,10 @@ class LikeDislike(models.Model):
     likes_dislikes = model_managers.LikeDislikeManager()
 
 
-class Vote(models.Model):
-    VOTES = (
-        (settings.LIKE, 'Like'),
-        (settings.DISLIKE, 'Dislike')
-    )
-
-    action = models.SmallIntegerField(choices=VOTES)
-    user_profile = models.ForeignKey(UserProfile, verbose_name=_('Пользователь'))
-
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey()
-
-    objects = model_managers.VotesManager()
 
 
-def do_vote(obj, user_profile, action):
-    try:
-        vote = Vote.objects.get(
-            content_type=ContentType.objects.get_for_model(obj),
-            object_id=obj.id,
-            user_profile=user_profile
-        )
-        if vote.action is not int(action):
-            vote.action = action
-            vote.save()
-            return action
-        else:
-            vote.delete()
-            return None
 
-    except Vote.DoesNotExist:
-        obj.rating.create(user_profile=user_profile, action=action)
-        return action
+
 
 
 

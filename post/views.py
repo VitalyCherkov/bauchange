@@ -56,6 +56,11 @@ class ListPost(ListView):
         return context
 
 
+class PopularPosts(ListPost):
+    def get_queryset(self):
+        return self.model.posts.get_popular()
+
+
 class CreatePost(LoginRequiredMixin, CreateView):
     template_name = 'post/create.html'
     form_class = CreatePostForm

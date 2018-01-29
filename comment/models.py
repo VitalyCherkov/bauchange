@@ -2,7 +2,7 @@ from django.db import models
 from django.shortcuts import get_object_or_404, reverse
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericRelation
-from post.models import Post, Vote, do_vote as _do_vote
+from post.models import Post, Vote, do_vote_base as _do_vote
 from userprofile.models import UserProfile
 
 
