@@ -48,6 +48,22 @@ class Comment(models.Model):
     def get_vote_url(self):
         return reverse('comments:comment-vote', kwargs={'pk': self.pk})
 
+    def voted_by_cur(self, user):
+
+        if user.is_authenticated:
+            cur_user = user.user_profile
+        else:
+            cur_user = None
+
+        try:
+            content_type = ContentType.objects.get_for_model(self)
+            vote = Vote.objects.get(user_profile=cur_user, content_type=content_type, object_id=self.pk)
+            vote = vote.action
+        except Vote.DoesNotExist:
+            vote = None
+
+        return vote
+
     def do_vote(self, user_profile, action):
         return _do_vote(obj=self, user_profile=user_profile, action=action)
 

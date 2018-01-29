@@ -1,13 +1,14 @@
 const LIKE = 1;
 const DISLIKE = -1;
 
-function draw_comment(response) {
-    console.log(response)
+function draw_comment(render_dict) {
+    console.log(render_dict)
     var template = $('#comment-item-template').html();
 
-    var html = Mustache.to_html(template, response);
+    var html = Mustache.to_html(template, render_dict);
+    html = $(html);
+    draw_vote_result(html, render_dict.result)
     $('#post-comments-list').prepend(html);
-
 }
 
 function add_comment_form() {
@@ -68,21 +69,7 @@ function post_vote_success(responce, current) {
     var dislikes_text = parent.find('[data-count="dislike"]');
     dislikes_text.text(responce.dislikes);
 
-    var like = parent.find('[data-action="like"]');
-    var dislike = parent.find('[data-action="dislike"]');
-
-    like.removeClass('active');
-    dislike.removeClass('active');
-
-    switch (parseInt(responce.result, 10)){
-        case LIKE:
-            like.addClass('active');
-            break;
-        case DISLIKE:
-            dislike.addClass('active');
-            break;
-    }
-
+    draw_vote_result(parent, responce.result);
 }
 
 function do_vote() {
@@ -91,14 +78,15 @@ function do_vote() {
     var action = vote.data('action');
     action = (action == 'like') ? LIKE : DISLIKE;
     var type = vote.data('type');
+    console.log(url);
 
-    console.log('vote clocked');
+    console.log('vote clicked');
 
     $.ajax({
         url: url,
         type: 'POST',
         data: {
-            'action': action
+            action: action
         },
         success: function (responce) {
             console.log(responce);
@@ -117,4 +105,23 @@ $(function() {
     $('[data-action="dislike"]').click(do_vote);
 });
 
+$(document).ready ( function () {
+    $(document).on('click', '[data-action="like"]', do_vote);
+    $(document).on('click', '[data-action="dislike"]', do_vote);
+});
+
+
+$( window ).load(function() {
+    console.log('loaded')
+    var comments = $('#post-comments-list');
+    var comments_url = comments.data('url');
+    var post_pk = comments.data('post');
+
+    $.get( comments_url, {'post': post_pk} )
+        .done(function( data ) {
+            $.each(data.reverse(), function(i, obj) {
+                draw_comment(obj)
+            });
+        });
+});
 

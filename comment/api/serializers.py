@@ -3,15 +3,16 @@ from comment.models import Comment
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(read_only=True)
+    vote_url = serializers.SerializerMethodField()
     author = serializers.ReadOnlyField(source='author.__str__')
     pub_date = serializers.DateTimeField(read_only=True)
     rating = serializers.IntegerField(source='rating.get_total', read_only=True)
     is_the_best=serializers.BooleanField(read_only=True)
+    result = serializers.SerializerMethodField()
 
     class Meta:
         model = Comment
-        fields = ('id', 'text', 'author', 'post', 'pub_date', 'rating', 'is_the_best')
+        fields = ('vote_url', 'text', 'author', 'post', 'pub_date', 'rating', 'is_the_best', 'result')
 
     def create(self, validated_data):
         comment = Comment(
@@ -21,6 +22,15 @@ class CommentSerializer(serializers.ModelSerializer):
         )
         comment.save()
         return comment
+
+    def get_vote_url(self, obj):
+        return obj.get_vote_url()
+
+    def get_result(self, obj):
+        try:
+            return obj.voted_by_cur(self.context['user'])
+        except KeyError:
+            return None
 
 
 class CommentVotesSerializer(serializers.ModelSerializer):

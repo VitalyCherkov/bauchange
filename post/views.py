@@ -17,8 +17,6 @@ class DetailPost(DetailView):
     def get_context_data(self, **kwargs):
         self.object.take_a_view()
         context = super(DetailPost, self).get_context_data()
-        context[CommentsList.context_object_name] = \
-            Comment.author_comments.get_comments_by_post(self.kwargs['pk'])
 
         vote = self.object.voted_by_cur(user=self.request.user)
         if vote == settings.LIKE:

@@ -27,6 +27,16 @@ class CommentViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         return self.serializers[self.action]
 
+    def list(self, request, *args, **kwargs):
+        self.action = CommentViewSet.DETAIL_ACTION
+        self.extra_context = {
+            'user': request.user
+        }
+        post_pk = request.query_params.get('post', None)
+        queryset = self.get_queryset().filter(post=post_pk)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
     def create(self, request, *args, **kwargs):
         self.action = CommentViewSet.CREATE_ACTION
         return super(CommentViewSet, self).create(request, args, kwargs)
@@ -42,7 +52,6 @@ class CommentViewSet(viewsets.ModelViewSet):
     def vote(self, request, *args, **kwargs):
         self.action = CommentViewSet.VOTE_ACTION
         object = self.get_object()
-
         result = object.do_vote(
             user_profile=request.user.user_profile,
             action=request.data['action']

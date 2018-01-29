@@ -4,7 +4,7 @@
         {% include "comment/add_form.html" %}
     {% endif %}
 
-    <div id="post-comments-list">
+    <div id="post-comments-list" data-url="{% url "comments:comments-list" %}" data-post="{{ post.pk }}">
         {% for comment in comments %}
             {% include "comment/item-django-template.html" with comment=comment %}
         {% endfor %}
