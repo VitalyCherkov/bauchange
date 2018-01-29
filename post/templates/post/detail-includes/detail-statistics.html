@@ -1,24 +1,27 @@
 <div class="post-statistics">
 
     <div class="post-votes btn-group">
-        <button class="btn btn-outline-secondary btn-outline-success {{ is_liked }}"
-                data-action="like"
-                data-url="{% url "post:like" pk=post.pk %}"
-                data-id="{{ post.id }}"
-        >
 
+        <button
+                class="btn btn-outline-secondary btn-outline-success {{ is_liked }}"
+                data-action="like"
+                data-url="{{ post.get_vote_url }}"
+                data-type="post"
+        >
             <span>За </span>
-            <span data-count="like">{{ post.get_likes_count }}</span>
+            <span data-count="like">{{ post.rating.get_likes }}</span>
         </button>
 
-        <button class="btn btn-outline-secondary btn-outline-danger {{ is_disliked }}"
+        <button
+                class="btn btn-outline-secondary btn-outline-danger {{ is_disliked }}"
                 data-action="dislike"
-                data-url="{% url "post:dislike" pk=post.pk %}"
-                data-id="{{ post.id }}"
+                data-url="{{ post.get_vote_url }}"
+                data-type="post"
         >
             <span>Против </span>
-            <span data-count="dislike">{{ post.get_dislikes_count }}</span>
+            <span data-count="dislike">{{ post.rating.get_dislikes }}</span>
         </button>
+
     </div>
 
     <div class="post-views float-right">

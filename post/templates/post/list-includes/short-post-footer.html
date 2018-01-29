@@ -5,8 +5,8 @@
             <div class="post-statistics-mini card-text">
                 <span class="pub-date-mini float-left">{{ post.pub_date|date:"H:i d.m.Y" }}</span>
                 <ul class="list-inline">
-                    <li class="list-inline-item"><i class="fa fa-chevron-up" aria-hidden="true"></i> {{ post.get_likes_count }}</li>
-                    <li class="list-inline-item"><i class="fa fa-chevron-down" aria-hidden="true"></i> {{ post.get_dislikes_count }}</li>
+                    <li class="list-inline-item"><i class="fa fa-chevron-up" aria-hidden="true"></i> {{ post.rating.get_likes }}</li>
+                    <li class="list-inline-item"><i class="fa fa-chevron-down" aria-hidden="true"></i> {{ post.rating.get_dislikes }}</li>
                     <li class="list-inline-item"><i class="fa fa-eye" aria-hidden="true"></i> {{ post.views }}</li>
                 </ul>
             </div>

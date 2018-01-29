@@ -64,7 +64,6 @@ class Post(models.Model):
     title = models.CharField(max_length=250)
     text = models.TextField()
     pub_date = models.DateTimeField(auto_now_add=True)
-    like_dislike = models.ManyToManyField(UserProfile, through='LikeDislike')
     rating = GenericRelation(Vote, related_query_name='posts')
 
     views = models.IntegerField(default=0)
@@ -80,11 +79,10 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('post:detail', kwargs={'pk': self.pk})
 
-    def get_likes_count(self):
-        return len(self.like_dislike.all().filter(likedislike__vote=settings.LIKE))
-
-    def get_dislikes_count(self):
-        return len(self.like_dislike.all().filter(likedislike__vote=settings.DISLIKE))
+    def take_a_view(self):
+        self.views += 1
+        self.save()
+        return self.views
 
     def voted_by_cur(self, user):
 
@@ -94,40 +92,23 @@ class Post(models.Model):
             cur_user = None
 
         try:
-            vote = LikeDislike.likes_dislikes.get(user_profile=cur_user, post=self)
-            vote = 'like' if vote.vote == settings.LIKE else 'dislike'
-        except LikeDislike.DoesNotExist:
+            content_type = ContentType.objects.get_for_model(self)
+            vote = Vote.objects.get(user_profile=cur_user, content_type=content_type, object_id=self.pk)
+            vote = vote.action
+        except Vote.DoesNotExist:
             vote = None
 
         return vote
 
-    def take_a_view(self):
-        self.views += 1
-        self.save()
-        return self.views
-
     def do_vote(self, user_profile, action):
         return do_vote_base(obj=self, user_profile=user_profile, action=action)
+
+    def get_vote_url(self):
+        return reverse('post:post-vote', kwargs={'pk': self.pk})
 
     def __str__(self):
         return '#{0}: {1}'.format(self.id, self.title)
 
-
-class LikeDislike(models.Model):
-    VOTES = (
-        (settings.DISLIKE, 'Dislike'),
-        (settings.LIKE, 'Like')
-    )
-
-    vote = models.SmallIntegerField(choices=VOTES)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-
-    def __str__(self):
-        value = 'like' if self.vote == settings.LIKE else 'dislike'
-        return 'Post_{0} -{1}- User_{2}'.format(self.post.pk, value, self.user_profile.pk)
-
-    likes_dislikes = model_managers.LikeDislikeManager()
 
 
 

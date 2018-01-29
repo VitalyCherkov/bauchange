@@ -24,15 +24,18 @@ class PostViewSet(viewsets.ModelViewSet):
         return self.serializers[self.action]
 
     def vote(self, request, *args, **kwargs):
+        print('\nBIG KEK\n')
         self.action = PostViewSet.VOTE_ACTION
-        post = self.get_object()
+        object = self.get_object()
 
-        result = post.do_vote(
+        print(object)
+
+        result = object.do_vote(
             user_profile=request.user.user_profile,
             action=request.data['action']
         )
 
         self.extra_context['result'] = result
 
-        serializer = self.get_serializer(post)
-        return result(serializer.data)
+        serializer = self.get_serializer(object)
+        return Response(serializer.data)

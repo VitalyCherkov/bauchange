@@ -16,5 +16,5 @@ app_name = 'comments'
 urlpatterns = [
     url(r'^post/(\d+)$', views.CommentsList.as_view(), name='post-comments'),
     url(r'^post/comments/$', comments_list, name='comment-create'),
-    url(r'^(?P<pk>[0-9]+)/vote/$', comment_vote, name='comment-vote')
+    url(r'^(?P<pk>\d+)/vote/$', comment_vote, name='comment-vote')
 ]

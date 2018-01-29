@@ -41,16 +41,16 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     def vote(self, request, *args, **kwargs):
         self.action = CommentViewSet.VOTE_ACTION
-        comment = self.get_object()
+        object = self.get_object()
 
-        result = comment.do_vote(
+        result = object.do_vote(
             user_profile=request.user.user_profile,
             action=request.data['action']
         )
 
         self.extra_context['result'] = result
 
-        serializer = self.get_serializer(comment)
+        serializer = self.get_serializer(object)
         return Response(serializer.data)
         
 

@@ -1,15 +1,10 @@
-import json
-from django.shortcuts import get_object_or_404
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
-from django.views.generic.base import View
-from django.http import HttpResponse
-from .models import Post, LikeDislike
+from bauchange import settings
+from .models import Post
 from .forms import CreatePostForm
-from userprofile.models import UserProfile
 from comment.models import Comment
 from comment.views import CommentsList
 
@@ -26,9 +21,9 @@ class DetailPost(DetailView):
             Comment.author_comments.get_comments_by_post(self.kwargs['pk'])
 
         vote = self.object.voted_by_cur(user=self.request.user)
-        if vote == 'like':
+        if vote == settings.LIKE:
             context['is_liked'] = 'active'
-        elif vote == 'dislike':
+        elif vote == settings.DISLIKE:
             context['is_disliked'] = 'active'
 
         return context
@@ -68,68 +63,3 @@ class CreatePost(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.set_user(self.request.user)
         return super(CreatePost, self).form_valid(form)
-
-
-class VoteViewAJAX(View):
-    vote_type = None
-
-    def post(self, request, pk):
-        if not request.user.is_authenticated():
-            return HttpResponse(
-                json.dumps({}),
-                content_type='application/json'
-            )
-
-
-        cur_post = Post.posts.get(pk=pk)
-        cur_user_profile = UserProfile.objects.get(user=request.user)
-        try:
-            like_dislike = LikeDislike.likes_dislikes.get(
-                post=cur_post,
-                user_profile=cur_user_profile
-            )
-            if like_dislike.vote != self.vote_type:
-                like_dislike.vote = self.vote_type
-                like_dislike.save()
-                result = True
-            else:
-                like_dislike.delete()
-                result = False
-
-        except LikeDislike.DoesNotExist:
-            like_dislike = LikeDislike(
-                user_profile=cur_user_profile,
-                post=cur_post,
-                vote=self.vote_type
-            )
-            like_dislike.save()
-            result = True
-
-        likes_count = cur_post.get_likes_count()
-        dislikes_count = cur_post.get_dislikes_count()
-        return HttpResponse(
-
-            json.dumps({
-                'result': result,
-                'likes_count': likes_count,
-                'dislikes_count': dislikes_count
-            }),
-            content_type='application/json'
-        )
-
-
-"""
-    Проверить наличие
-        Если есть
-            Узнать тип
-            Удалить
-            Если типы не совпадают
-                Создать
-        Иначе
-            Создать
-"""
-
-
-
-
-

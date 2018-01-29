@@ -18,37 +18,14 @@ class PostManager(models.Manager):
         return self.get_queryset().filter(tag=tag)
 
 
-class LikeDislikeManager(models.Manager):
-    def get_queryset(self):
-        return super(LikeDislikeManager, self).get_queryset()
-
-    def get_likes(self):
-        return self.get_queryset().filter(vote=settings.LIKE)
-
-    def get_dislikes(self):
-        return self.get_queryset().filter(vote=settings.DISLIKE)
-
-    def get_likes_by_post(self, post):
-        return self.get_likes().filter(post__pk=post.pk)
-
-    def get_dislikes_by_post(self, post):
-        return self.get_dislikes().filter(post__pk=post.pk)
-
-    def get_likes_by_user(self, user_profile):
-        return self.get_likes().filter(user_profile__pk=user_profile.pk)
-
-    def get_dislikes_by_user(self, user_profile):
-        return self.get_dislikes().filter(user_profile__pk=user_profile.pk)
-
-
 class VotesManager(models.Manager):
     use_for_related_fields = True
 
     def get_likes(self):
-        return self.get_queryset().filter(action=settings.LIKE)
+        return self.get_queryset().filter(action=settings.LIKE).count()
 
     def get_dislikes(self):
-        return self.get_queryset().filter(action=settings.DISLIKE)
+        return self.get_queryset().filter(action=settings.DISLIKE).count()
 
     def get_total(self):
-        return self.get_likes().count() - self.get_dislikes().count()
+        return self.get_likes() - self.get_dislikes()
