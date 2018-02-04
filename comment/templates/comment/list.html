@@ -1,14 +1,10 @@
 <div id="post-comments">
-    <h4 class="card-subtitle">Комментарии ({{ comments.count }})</h4>
+    <h4 class="card-subtitle">Комментарии (<span id="post-comments-count">0</span>)</h4>
     {% if request.user.is_authenticated %}
         {% include "comment/add_form.html" %}
     {% endif %}
 
     <div id="post-comments-list" data-url="{% url "comments:comments-list" %}" data-post="{{ post.pk }}">
-        {% for comment in comments %}
-            {% include "comment/item-django-template.html" with comment=comment %}
-        {% endfor %}
-
         {% include "comment/item-js-template.html" %}
     </div>
 </div>

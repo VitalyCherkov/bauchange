@@ -106,6 +106,9 @@ class Post(models.Model):
     def get_vote_url(self):
         return reverse('post:post-vote', kwargs={'pk': self.pk})
 
+    def get_api_url(self):
+        return reverse('post:api-detail', kwargs={'pk': self.pk})
+
     def __str__(self):
         return '#{0}: {1}'.format(self.id, self.title)
 

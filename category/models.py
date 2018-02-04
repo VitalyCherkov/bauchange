@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 
 
 class Category(models.Model):
@@ -7,3 +8,6 @@ class Category(models.Model):
 
     def __str__(self):
         return self.label
+
+    def get_url(self):
+        return reverse('category:posts-by-category', kwargs={'pk': self.pk})

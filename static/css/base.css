@@ -152,10 +152,20 @@ p {
 }
 
 .post-sidebar {
-    display: inline-block;
-    float: left;
-    margin-right: 30px;
     margin-bottom: 10px;
+    height: 60px;
+}
+
+.user-mini-photo-container, .user-mini-photo-container img {
+    float: left;
+    height: 60px;
+    width: 60px;
+}
+
+.post-user-date {
+    float: left;
+    height: 40px;
+    margin: 10px;
 }
 
 .author {
@@ -163,7 +173,6 @@ p {
 }
 
 .author-name {
-    margin: 10px;
     font-family: 'Ubuntu', sans-serif;
     font-weight: 700;
     font-size: 16px;
@@ -187,8 +196,7 @@ p {
 }
 
 .post-pub-date {
-    text-align: center;
-    margin-bottom: 10px;
+    font-size: 12px;
 }
 
 .post-votes button {

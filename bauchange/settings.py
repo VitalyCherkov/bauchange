@@ -124,7 +124,7 @@ LOGOUT_REDIRECT_URL = reverse_lazy('post:list')
 
 LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -152,7 +152,7 @@ REST FRAMEWORK
 """
 
 REST_FRAMEWORK = {
-    'DATETIME_FORMAT': "%H:%M:%S",
+    'DATETIME_FORMAT': "%H:%M:%S %d.%m.%Y",
 }
 
 ''' --------------------------------------------------------------------------------------

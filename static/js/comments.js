@@ -2,13 +2,17 @@ const LIKE = 1;
 const DISLIKE = -1;
 
 function draw_comment(render_dict) {
-    console.log(render_dict)
     var template = $('#comment-item-template').html();
-
     var html = Mustache.to_html(template, render_dict);
     html = $(html);
-    draw_vote_result(html, render_dict.result)
+    draw_vote_result(html, render_dict.result);
     $('#post-comments-list').prepend(html);
+
+    var comments_count = parseInt($('#post-comments-count').text(), 10) || 0;
+    comments_count++;
+    $('#post-comments-count').text(comments_count);
+
+
 }
 
 function add_comment_form() {
@@ -41,9 +45,6 @@ function draw_vote_result(vote_block, result) {
     var dislike = vote_block.find('[data-action="dislike"]');
     like.removeClass('active');
     dislike.removeClass('active');
-
-    console.log(LIKE);
-
     switch (parseInt(result, 10)){
         case LIKE:
             like.addClass('active');
@@ -78,10 +79,6 @@ function do_vote() {
     var action = vote.data('action');
     action = (action == 'like') ? LIKE : DISLIKE;
     var type = vote.data('type');
-    console.log(url);
-
-    console.log('vote clicked');
-
     $.ajax({
         url: url,
         type: 'POST',
@@ -100,19 +97,16 @@ function do_vote() {
     });
 }
 
-$(function() {
-    $('[data-action="like"]').click(do_vote);
-    $('[data-action="dislike"]').click(do_vote);
-});
+function load_detail_post() {
+    var post_detail = $('#post');
+    var post_detail_url = post_detail.data('url');
 
-$(document).ready ( function () {
-    $(document).on('click', '[data-action="like"]', do_vote);
-    $(document).on('click', '[data-action="dislike"]', do_vote);
-});
+    $.get( post_detail_url ).done(function (data) {
+        console.log(data);
+    });
+}
 
-
-$( window ).load(function() {
-    console.log('loaded')
+function load_comments() {
     var comments = $('#post-comments-list');
     var comments_url = comments.data('url');
     var post_pk = comments.data('post');
@@ -123,5 +117,15 @@ $( window ).load(function() {
                 draw_comment(obj)
             });
         });
+}
+
+$(document).ready ( function () {
+    $(document).on('click', '[data-action="like"]', do_vote);
+    $(document).on('click', '[data-action="dislike"]', do_vote);
+});
+
+$( window ).load(function() {
+    load_detail_post();
+    load_comments();
 });
 

@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="post card">
+<div id="post" class="post card" data-url="{{ post.get_api_url }}">
     <div class="post-main card-body">
         {% include "post/detail-includes/detail-sidebar.html" with pub_date=post.pub_date %}
         {% include "post/detail-includes/detail-content.html" %}
