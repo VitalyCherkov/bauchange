@@ -1,4 +1,5 @@
 from django.conf.urls import url
+from django.urls import path
 from . import views
 from .api.viewsets import PostViewSet
 
@@ -12,10 +13,10 @@ post_vote = PostViewSet.as_view({
 
 app_name = 'post'
 urlpatterns = [
-    url(r'^create/$', views.CreatePost.as_view(), name='create'),
-    url(r'^(?P<pk>\d+)/vote/$', post_vote, name='post-vote'),
-    url(r'^(?P<pk>\d+)/$', views.DetailPost.as_view(), name='detail'),
-    url(r'^hot/$', views.PopularPosts.as_view(), name='popular'),
-    url(r'^api/(?P<pk>\d+)/$', post_detail, name='api-detail'),
-    url(r'^$', views.ListPost.as_view(), name='list'),
+    path('create/', views.CreatePost.as_view(), name='create'),
+    path('<int:pk>/vote', post_vote, name='post-vote'),
+    path('<int:pk>/', views.DetailPost.as_view(), name='detail'),
+    path('hot/', views.PopularPosts.as_view(), name='popular'),
+    path('api/<int:pk>/', post_detail, name='api-detail'),
+    path('', views.ListPost.as_view(), name='list'),
 ]

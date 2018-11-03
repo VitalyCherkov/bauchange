@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 
 
 def current_userprofile(request):
-    if hasattr(request, 'user') and request.user.is_authenticated():
+    if hasattr(request, 'user') and request.user.is_authenticated:
         try:
             userprofile = UserProfile.objects.get(user=request.user)
         except:

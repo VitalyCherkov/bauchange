@@ -1,5 +1,5 @@
 from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
@@ -17,7 +17,7 @@ class Vote(models.Model):
     )
 
     action = models.SmallIntegerField(choices=VOTES)
-    user_profile = models.ForeignKey(UserProfile, verbose_name=_('Пользователь'))
+    user_profile = models.ForeignKey(UserProfile, verbose_name=_('Пользователь'), on_delete=models.CASCADE)
 
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()

@@ -1,17 +1,17 @@
-from django.conf.urls import url
+from django.urls import path
 from django.contrib.auth.views import LoginView, LogoutView
 from . import views
 
 app_name = 'userprofile'
 urlpatterns = [
-    url(r'^edit/(?P<pk>\d+)/', views.EditView.as_view(), name='editprofile'),
-    url(r'^(?P<pk>\d+)/', views.UserPageDetail.as_view(), name='userpage'),
-    url(r'^login/$',
+    path('edit/<int:pk>/', views.EditView.as_view(), name='editprofile'),
+    path('<int:pk>/', views.UserPageDetail.as_view(), name='userpage'),
+    path('login/',
         LoginView.as_view(
             redirect_authenticated_user=True,
             template_name='userprofile/login.html'),
         name='login'
         ),
-    url(r'^logout/$', LogoutView.as_view(), name='logout'),
-    url(r'^signup/$', views.SignUpView.as_view(), name='signup')
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('signup/', views.SignUpView.as_view(), name='signup')
 ]
