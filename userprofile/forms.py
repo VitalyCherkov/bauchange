@@ -24,6 +24,9 @@ class EditProfileForm(ModelForm):
     last_name = forms.CharField(max_length=User._meta.get_field('last_name').max_length)
     last_name.label = _('Фамилия')
 
+    avatar = forms.ImageField()
+    avatar.label = _('Загрузить фото')
+
     def update_initial(self):
         self.fields['email'].initial = self.instance.user.email
         self.fields['first_name'].initial = self.instance.user.first_name
@@ -46,6 +49,11 @@ class EditProfileForm(ModelForm):
             params={'value': email}
         )
 
+    def clean_avatar(self):
+        avatar = self.cleaned_data['avatar']
+        print('avatar', avatar)
+        return avatar
+
     def save(self, commit=True):
         self.instance.user.email = self.cleaned_data['email']
         self.instance.user.username = self.instance.user.email
@@ -53,6 +61,7 @@ class EditProfileForm(ModelForm):
         self.instance.user.last_name = self.cleaned_data['last_name']
         self.instance.user.save()
         self.instance.about = self.cleaned_data['about']
+        self.instance.avatar = self.cleaned_data['avatar']
         self.instance.save()
         return self.instance
 

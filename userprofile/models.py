@@ -7,7 +7,7 @@ import uuid
 def get_file_path(instance, filename):
     ext = filename.split('.')[-1]
     filename = "%s.%s" % (uuid.uuid4(), ext)
-    return 'uploads/%s/%s/%s' % (filename[:1], filename[2:3], filename)
+    return 'avatar/%s/%s/%s' % (filename[:1], filename[2:3], filename)
 
 
 class UserProfile(models.Model):

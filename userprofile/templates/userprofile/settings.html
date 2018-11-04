@@ -17,7 +17,7 @@
                 {% endblock %}
             </h2>
 
-            <form method="post" action="{% url "userprofile:editprofile" pk=context_userprofile.pk %}?next={{ next }}">
+            <form enctype="multipart/form-data" method="post" action="{% url "userprofile:editprofile" pk=context_userprofile.pk %}?next={{ next }}">
                 {% csrf_token %}
 
                 {% if form.errors %}
@@ -31,6 +31,8 @@
 
                 {# first name #}
                 {% include "forms/charfield.html" with field=form.first_name %}
+
+                {{ form.avatar }}
 
                 {# second name #}
                 {% include "forms/charfield.html" with field=form.last_name %}
