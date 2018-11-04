@@ -1,5 +1,13 @@
 <div class="card text-center userpage-card">
-    <div class="card-header userpage-user-bg"></div>
+    <div class="card-header userpage-user-bg" style="
+        background: url('{{ userprofile.get_avatar_url }}');
+        background-size: cover;
+        background-position: center;
+        filter: blur(3px);
+        transform: scale(1.1);
+        z-index: 0;
+        clip-path: polygon(4.5454% 4.5454%, 95.4545% 4.5454%, 95.4545% 95.4545%, 4.5454% 95.4545%);
+    "></div>
 
     <div class="userpage-photo-container">
         <div class="userpage-photo-sq">
