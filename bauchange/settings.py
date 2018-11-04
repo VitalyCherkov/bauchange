@@ -132,9 +132,9 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
+''' --------------------------------------------------------------------------------------
+STATIC FILES
+-------------------------------------------------------------------------------------- '''
 
 STATIC_URL = '/static/'
 
@@ -144,12 +144,13 @@ STATICFILES_DIRS = (
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'upload')
 
-"""
+MEDIA_URL = '/storage/'
 
+''' --------------------------------------------------------------------------------------
 REST FRAMEWORK
-
-"""
+-------------------------------------------------------------------------------------- '''
 
 REST_FRAMEWORK = {
     'DATETIME_FORMAT': "%H:%M:%S %d.%m.%Y",

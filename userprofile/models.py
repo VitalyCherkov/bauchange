@@ -3,10 +3,12 @@ from django.db import models
 from django.contrib.auth.models import User
 import uuid
 
+
 def get_file_path(instance, filename):
     ext = filename.split('.')[-1]
     filename = "%s.%s" % (uuid.uuid4(), ext)
     return 'uploads/%s/%s/%s' % (filename[:1], filename[2:3], filename)
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_profile')
@@ -19,7 +21,7 @@ class UserProfile(models.Model):
         try:
             return self.avatar.url
         except Exception:
-            return 'static/img/user_bg.jpg'
+            return 'static/img/user_empty.jpg'
 
     def get_absolute_url(self):
         return reverse('userprofile:userpage', kwargs={'pk': self.pk})

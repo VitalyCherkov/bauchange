@@ -1,6 +1,6 @@
 <div class="comment row create-comment">
     <div class="comment-author-photo col">
-        <img src="/bauchange_fish/img/user_empty.png" class="rounded">
+        <img src="{{ request.user.user_profile.get_avatar_url }}" class="rounded">
     </div>
 
     <form id="add-comment-form" class="comment-content col" method="POST" action="javascript:void(null);" onsubmit="add_comment_form()"
