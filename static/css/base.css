@@ -327,6 +327,10 @@ Categories
     height: 150px;
 }
 
+.avatar-frame {
+    object-fit: cover;
+}
+
 .userpage-edit-link {
     position: absolute;
     bottom: 0;

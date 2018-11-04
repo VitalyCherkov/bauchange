@@ -3,7 +3,7 @@
 
     <div class="userpage-photo-container">
         <div class="userpage-photo-sq">
-            <img class="rounded-circle userpage-photo" src="{{ userprofile.get_avatar_url }}">
+            <img class="rounded-circle userpage-photo avatar-frame" src="{{ userprofile.get_avatar_url }}">
 
             {#Кнопка редактирования#}
             {% if request.user == userprofile.user %}
