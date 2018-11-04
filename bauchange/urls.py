@@ -17,6 +17,8 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.generic.base import RedirectView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -26,6 +28,6 @@ urlpatterns = [
     url(r'^userprofile/', include('userprofile.urls')),
     url(r'^comment/', include('comment.urls')),
     url(r'^$', RedirectView.as_view(url='post/'), name='homepage')
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += staticfiles_urlpatterns()

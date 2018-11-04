@@ -21,7 +21,7 @@ class UserProfile(models.Model):
         try:
             return self.avatar.url
         except Exception:
-            return 'static/img/user_empty.jpg'
+            return '/static/img/user_empty.png'
 
     def get_absolute_url(self):
         return reverse('userprofile:userpage', kwargs={'pk': self.pk})
